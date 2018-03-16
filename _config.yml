@@ -10,7 +10,7 @@ title: Open Angel Arena
 email: chrisinajar@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   The official website for Open Angel Arena, check your MMR and probably other things.
-baseurl: "oaa.gg/" # the subpath of your site, e.g. /blog
+baseurl: "/oaa.gg" # the subpath of your site, e.g. /blog
 url: "https://openangelarena.github.io/" # the base hostname & protocol for your site
 twitter_username: chrisinajar
 github_username:  chrisinajar
