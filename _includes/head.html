@@ -1,0 +1,48 @@
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112154059-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-112154059-2');
+  </script>
+
+
+  <meta charset="utf-8" />
+
+  <link href="{{ site.baseurl }}/css/style.css" rel="stylesheet" />
+  <meta name="google-site-verification" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="{{ site.description }}">
+  <link rel="icon" type="image/png" href="{{ site.baseurl }}/favicon.png" />
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script async src="{{ site.baseurl }}/js/bundle.js"></script>
+  <script async src="{{ site.baseurl }}/semantic/dist/semantic.min.js"></script>
+
+  <meta property="og:url"                content="{{ site.url }}{{ site.baseurl }}{{ page.url }}" />
+  <meta property="og:title"              content="{{ page.title }}" />
+  {% if page.description %}
+    <meta property="og:description"              content="{{ page.description }}" />
+  {% else %}
+    <meta property="og:description"              content="{{ site.description }}" />
+  {% endif %}
+
+  {% if page.image %}
+    <meta property="og:image"              content="{{ page.image }}" />
+  {% endif %}
+
+  <title>
+    {{ site.title }}
+    {% if page.title %}
+      - {{ page.title }}
+    {% endif %}
+    {% if page.subtitle %}
+      {{ page.subtitle }}
+    {% endif %}
+  </title>
+</head>

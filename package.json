@@ -1,0 +1,19 @@
+{
+  "name": "oaa.gg",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify src/index.js -o js/bundle.js -t [ uglifyify -x .js -x .coffee ]"
+  },
+  "repository": "git@github.com:OpenAngelArena/oaa.gg.git",
+  "author": "Chris Vickery <chrisinajar@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "browserify": "^16.1.1",
+    "gulp": "^3.9.1",
+    "request": "^2.85.0",
+    "request-promise-native": "^1.0.5",
+    "semantic-ui": "^2.3.0",
+    "uglifyify": "^4.0.5"
+  }
+}
