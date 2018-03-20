@@ -1,6 +1,6 @@
 const request = require('request-promise-native');
 
-const API_ROOT = 'http://chrisinajar.com:6969/';
+const API_ROOT = 'https://chrisinajar.com:4969/';
 
 module.exports = checkLeaderboard;
 
