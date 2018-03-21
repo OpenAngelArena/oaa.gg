@@ -71249,6 +71249,6 @@ function extend() {
 var checkLeaderboard=require("./leaderboard");checkLeaderboard();
 
 },{"./leaderboard":370}],370:[function(require,module,exports){
-const request=require("request-promise-native"),API_ROOT="http://chrisinajar.com:6969/";function checkLeaderboard(){$(function(){var e=$(".loaderboard");console.log("Checking for leaderboard!",e),e.length&&fillLeaderboard(e)})}async function fillLeaderboard(e){var r=await request.get(API_ROOT+"top");(r=JSON.parse(r)).forEach(function(r){var a=$("<tr />");e.append(a),a.append("<td>"+r.ranking+"</td>"),a.append($("<td />").text(r.name)),a.append("<td>"+roundForDisplay(r.mmr)+"</td>")})}function roundForDisplay(e){return~~(1e3*e)/1e3}module.exports=checkLeaderboard;
+const request=require("request-promise-native"),API_ROOT="https://chrisinajar.com:4969/";function checkLeaderboard(){$(function(){var e=$(".loaderboard");console.log("Checking for leaderboard!",e),e.length&&fillLeaderboard(e)})}async function fillLeaderboard(e){var r=await request.get(API_ROOT+"top");(r=JSON.parse(r)).forEach(function(r){var a=$("<tr />");e.append(a),a.append("<td>"+r.ranking+"</td>"),a.append($("<td />").text(r.name)),a.append("<td>"+roundForDisplay(r.mmr)+"</td>")})}function roundForDisplay(e){return~~(1e3*e)/1e3}module.exports=checkLeaderboard;
 
 },{"request-promise-native":289}]},{},[369]);
