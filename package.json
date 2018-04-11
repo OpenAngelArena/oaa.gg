@@ -8,12 +8,11 @@
   "repository": "git@github.com:OpenAngelArena/oaa.gg.git",
   "author": "Chris Vickery <chrisinajar@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "browserify": "^16.1.1",
+  "dependencies": {},
+  "devDependencies": {
     "gulp": "^3.9.1",
-    "request": "^2.85.0",
-    "request-promise-native": "^1.0.5",
-    "semantic-ui": "^2.3.0",
-    "uglifyify": "^4.0.5"
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify-es": "^1.0.1",
+    "gulp-watch": "^5.0.0"
   }
 }

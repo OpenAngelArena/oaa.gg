@@ -1,13 +1,16 @@
 ---
+layout: compress
 ---
 <!-- Doctype HTML5 -->
 <!doctype html>
 <html>
   {% include head.html %}
-<body>
+<body id="body">
   {% include nav.html %}
 
-  {{ content }}
+  <main>
+    {{ content }}
+  </main>
 
   {% include footer.html %}
 </body>

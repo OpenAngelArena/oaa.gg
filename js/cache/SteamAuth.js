@@ -1,0 +1,2 @@
+!function(){var n=window.__GRN;window[n].ready(function(){window[n].SteamAuth=function(){var e=[];return{__init:function(){window[n].awaitModulePrepared("OpenID",function(){new UserManager})}.bind(this),registerOnAuthenticatedCallback:function(n){e.push(n)}.bind(this),get currentUserSteam32(){return 0},get currentUserSteam64(){return 0}}}(),window[n].modulePrepared("SteamAuth"),window[n].moduleReady(window[n].SteamAuth.__init)})}();
+//# sourceMappingURL=SteamAuth.js.map

@@ -25,6 +25,12 @@ collections:
   authors:
     output: true
 
+sass:
+  style: :compressed
+
+compress_html:
+  clippings: all
+
 defaults:
   -
     scope:
