@@ -24,6 +24,12 @@
             return {
                 __init: function() {
                     window[rootObjectName].awaitModulePrepared('OpenID', function() {
+                        window[rootObjectName].awaitModulePrepared('Debug', function() {
+                            window[rootObjectName].Debug.writeConsoleMessage('Initializing Steam authentication', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                        });
+
+                        Oidc.Log.logger = console;
+
                         // TODO: Do background Steam authentication first, then bind prompted authentication if that fails
                         userManagerInstance = new Oidc.UserManager({
                             authority: 'https://steamcommunity.com/openid/',
