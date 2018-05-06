@@ -1,3 +1,6 @@
+# Ignore IDE-specific configuration directories
+/.idea/
+
 _site/
 .sass-cache/
 .jekyll-metadata
