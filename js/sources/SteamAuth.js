@@ -7,8 +7,19 @@
             var hasBeenAuthenticated     = false;
             var userManagerInstance      = null;
 
-            var handleUpdateNavToAuthenticated = function() {
+            var handleUpdateNavToAuthenticated = function(user) {
+                if (!user) {
+                    handleUpdateNavToRequiresAuthentication();
+                }
 
+                hasBeenAuthenticated = true;
+
+                var i = 0;
+                var j = onAuthenticatedCallbacks.length;
+
+                for (i; i < j; i++) {
+                    window[rootObjectName].handleRunCallback(onAuthenticatedCallbacks[i]);
+                }
             };
 
             var handleUpdateNavToRequiresAuthentication = function() {
