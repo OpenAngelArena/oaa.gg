@@ -7,15 +7,40 @@
             var hasBeenAuthenticated     = false;
             var userManagerInstance      = null;
 
-            var handlePromptUserToAuthenticateWithSteam = function() {
+            var handleUpdateNavToAuthenticated = function() {
 
+            };
+
+            var handleUpdateNavToRequiresAuthentication = function() {
+                var authButton = document.querySelector('body>nav .steamAuth');
+
+                authButton.classList.remove('loading');
+
+                authButton.addEventListener('click', userManagerInstance.signinPopup);
+                authButton.addEventListener('tap',   userManagerInstance.signinPopup);
+                authButton.addEventListener('touch', userManagerInstance.signinPopup);
             };
 
             return {
                 __init: function() {
                     window[rootObjectName].awaitModulePrepared('OpenID', function() {
                         // TODO: Do background Steam authentication first, then bind prompted authentication if that fails
-                        userManagerInstance = new UserManager();
+                        userManagerInstance = new Oidc.UserManager({
+                            authority: 'https://steamcommunity.com/openid/',
+                            client_id: '0FA551D64997BEF92A8FC8CBB1ECBA2B',
+                            redirect_uri: window.location.origin + window.location.pathname,
+                            scope: 'openid',
+                            userStore: new Oidc.WebStorageStateStore({
+                                store: window.localStorage
+                            }),
+                            checkSessionInterval: 30000,
+                            popupWindowTarget: window.open,
+                            automaticSilentRenew: true,
+                        });
+
+                        userManagerInstance.getUser()
+                            .then(handleUpdateNavToAuthenticated)
+                            .catch(handleUpdateNavToRequiresAuthentication);
                     });
                 }.bind(this),
 
