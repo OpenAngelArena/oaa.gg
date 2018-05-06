@@ -12,7 +12,15 @@
                     handleUpdateNavToRequiresAuthentication();
                 }
 
+                window[rootObjectName].awaitModulePrepared('Debug', function() {
+                    window[rootObjectName].Debug.writeConsoleMessage('User is currently authenticated', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                });
+
                 hasBeenAuthenticated = true;
+
+                window[rootObjectName].awaitModulePrepared('Debug', function() {
+                    window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                });
 
                 var i = 0;
                 var j = onAuthenticatedCallbacks.length;
@@ -20,12 +28,27 @@
                 for (i; i < j; i++) {
                     window[rootObjectName].handleRunCallback(onAuthenticatedCallbacks[i]);
                 }
+
+                // Remove the handlers for authenticating
+                var authButton = document.querySelector('body>nav .steamAuth');
+
+                authButton.removeEventListener('click', userManagerInstance.signinPopup);
+                authButton.removeEventListener('tap',   userManagerInstance.signinPopup);
+                authButton.removeEventListener('touch', userManagerInstance.signinPopup);
             };
 
             var handleUpdateNavToRequiresAuthentication = function() {
+                window[rootObjectName].awaitModulePrepared('Debug', function() {
+                    window[rootObjectName].Debug.writeConsoleMessage('User is not currently authenticated', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                });
+
                 var authButton = document.querySelector('body>nav .steamAuth');
 
                 authButton.classList.remove('loading');
+
+                window[rootObjectName].awaitModulePrepared('Debug', function() {
+                    window[rootObjectName].Debug.writeConsoleMessage('Bound interactions for nav button for authentication', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                });
 
                 authButton.addEventListener('click', userManagerInstance.signinPopup);
                 authButton.addEventListener('tap',   userManagerInstance.signinPopup);
@@ -41,7 +64,6 @@
 
                         Oidc.Log.logger = console;
 
-                        // TODO: Do background Steam authentication first, then bind prompted authentication if that fails
                         userManagerInstance = new Oidc.UserManager({
                             authority: 'https://steamcommunity.com/openid/',
                             client_id: '0FA551D64997BEF92A8FC8CBB1ECBA2B',
