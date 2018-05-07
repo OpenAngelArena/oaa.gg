@@ -65,32 +65,52 @@
                         Oidc.Log.logger = {
                             log: function(message) {
                                 window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_LOG);
-                                }.bind(this, message.toString()));
+                                    if (typeof(message) === 'string') {
+                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_LOG);
+                                    } else {
+                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_LOG);
+                                    }
+                                }.bind(this, message));
                             },
 
                             warn: function(message) {
                                 window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_WARN);
-                                }.bind(this, message.toString()));
+                                    if (typeof(message) === 'string') {
+                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_WARN);
+                                    } else {
+                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_WARN);
+                                    }
+                                }.bind(this, message));
                             },
 
                             info: function(message) {
                                 window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                                }.bind(this, message.toString()));
+                                    if (typeof(message) === 'string') {
+                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                                    } else {
+                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                                    }
+                                }.bind(this, message));
                             },
 
                             debug: function(message) {
                                 window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_DEBUG);
-                                }.bind(this, message.toString()));
+                                    if (typeof(message) === 'string') {
+                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_DEBUG);
+                                    } else {
+                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_DEBUG);
+                                    }
+                                }.bind(this, message));
                             },
 
                             error: function(message) {
                                 window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
-                                }.bind(this, message.toString()));
+                                    if (typeof(message) === 'string') {
+                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
+                                    } else {
+                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
+                                    }
+                                }.bind(this, message));
                             }
                         };
 
