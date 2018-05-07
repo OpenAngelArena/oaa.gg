@@ -62,7 +62,37 @@
                             window[rootObjectName].Debug.writeConsoleMessage('Initializing Steam authentication', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
                         });
 
-                        Oidc.Log.logger = console;
+                        Oidc.Log.logger = {
+                            log: function(message) {
+                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
+                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_LOG);
+                                }.bind(this, message.toString()));
+                            },
+
+                            warn: function(message) {
+                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
+                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_WARN);
+                                }.bind(this, message.toString()));
+                            },
+
+                            info: function(message) {
+                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
+                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                                }.bind(this, message.toString()));
+                            },
+
+                            debug: function(message) {
+                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
+                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_DEBUG);
+                                }.bind(this, message.toString()));
+                            },
+
+                            error: function(message) {
+                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
+                                    window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
+                                }.bind(this, message.toString()));
+                            }
+                        };
 
                         userManagerInstance = new Oidc.UserManager({
                             authority: 'https://steamcommunity.com/openid/',
