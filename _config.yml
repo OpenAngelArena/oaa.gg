@@ -38,3 +38,7 @@ defaults:
       type: "posts"
     values:
       layout: post
+
+# Prose configuration
+rooturl: "/_includes"
+siteurl: "https://openangelarena.github.io/"
