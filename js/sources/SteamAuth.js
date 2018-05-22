@@ -7,6 +7,7 @@
             var userSteamProfileData     = null;
             var onAuthenticatedCallbacks = [];
             var hasBeenAuthenticated     = false;
+            var apiKey                   = '0FA551D64997BEF92A8FC8CBB1ECBA2B'; // TODO: Shouldn't this be linked to the main OAA account instead of mine?
 
             var handleUpdateNavToAuthenticated = function() {
                 if (!userSteam64) {
@@ -33,7 +34,7 @@
                 }
 
                 // If we got here...userdata doesn't exist, so fetch it
-                window.fetch('https://cors.io?https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=0FA551D64997BEF92A8FC8CBB1ECBA2B&steamids=76561198001344723', {
+                window.fetch('https://cors.io?https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + apiKey + '&steamids=' + userSteam64, {
                     cache: "default",
                 })
                     .then(function(response) {
