@@ -34,44 +34,12 @@
                 }
 
                 // If we got here...userdata doesn't exist, so fetch it
-                window.fetch('https://cors.io?https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + apiKey + '&steamids=' + userSteam64, {
+                window.fetch('https://chrisinajar.com:4969/users/' + window[rootObjectName].SteamAuth.currentUserSteam32, {
                     cache: "default",
                 })
                     .then(function(response) {
                         response.text()
                             .then(function(responseText) {
-                                // Doing this because browsers can decide to auto-parse this sometimes
-                                var response = ((typeof(responseText) === 'string') ? JSON.parse(responseText) : responseText);
-
-                                // Make sure we are only working on the profile we want...
-                                /**
-                                 * @var {{
-                                 *  response: {
-                                 *    players: []
-                                 *  }
-                                 * }} response
-                                 */
-                                if (response.response && response.response.players) {
-                                    var i = 0;
-                                    var j = response.response.players.length;
-                                    var found = false;
-
-                                    for (i; i < j; i++) {
-                                        if (response.response.players[i].steamid && (response.response.players[i].steamid === userSteam64)) {
-                                            responseText = JSON.stringify(response.response.players[i]);
-
-                                            found = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (!found) {
-                                        handleProfileDataForUserUnableToBeResolved(new Error('Player data not verified in response!'));
-
-                                        return;
-                                    }
-                                }
-
                                 window.localStorage.setItem('OAAGGSUP', (Date.now() + 604800000) + ':' + responseText);
 
                                 handleProfileDataForUserAvailable(responseText);
@@ -82,7 +50,7 @@
             };
 
             var handleProfileDataForUserAvailable = function(userDataString) {
-
+                // TODO: Populate DOM
 
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
@@ -181,7 +149,7 @@
                 }.bind(this),
 
                 get currentUserSteam32() {
-                    return userSteam64 - 76561197960265728;
+                    return (Number(userSteam64) - 76561197960265728).toString();
                 },
 
                 get currentUserSteam64() {
