@@ -55,7 +55,7 @@
 
             return {
                 __init: function() {
-                    window[rootObjectName].awaitModulePrepared('ULR', function() {
+                    window[rootObjectName].awaitModulePrepared('URL', function() {
                         // TL`DR, this sets up a browser-side 'session' flow where the response can be read from the URL
                         document.getElementById('steamAuth').setAttribute(
                             'href',

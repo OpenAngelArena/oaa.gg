@@ -3,8 +3,14 @@
 
     window[rootObjectName].ready(function() {
         /**
-         *
-         * @type {{searchParams, searchParamExists, searchParamValue, anchorParams, anchorParamExists, anchorParamValue}} window[rootObjectName].URL
+         * @type {{
+         *   searchParams: Function,
+         *   searchParamExists: Function,
+         *   searchParamValue: Function,
+         *   anchorParams: Function,
+         *   anchorParamExists: Function,
+         *   anchorParamValue: Function,
+         * }} window[rootObjectName].URL
          */
         window[rootObjectName].URL = (function () {
             var searchParams = {};
