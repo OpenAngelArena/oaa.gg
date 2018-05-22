@@ -3,12 +3,13 @@
 
     window[rootObjectName].ready(function() {
         window[rootObjectName].SteamAuth = (function () {
+            var userSteam64              = 0;
+            var userSteamProfileData     = null;
             var onAuthenticatedCallbacks = [];
             var hasBeenAuthenticated     = false;
-            var userManagerInstance      = null;
 
-            var handleUpdateNavToAuthenticated = function(user) {
-                if (!user) {
+            var handleUpdateNavToAuthenticated = function(steam64) {
+                if (!steam64) {
                     handleUpdateNavToRequiresAuthentication();
                 }
 
@@ -29,12 +30,7 @@
                     window[rootObjectName].handleRunCallback(onAuthenticatedCallbacks[i]);
                 }
 
-                // Remove the handlers for authenticating
-                var authButton = document.querySelector('body>nav .steamAuth');
-
-                authButton.removeEventListener('click', userManagerInstance.signinPopup);
-                authButton.removeEventListener('tap',   userManagerInstance.signinPopup);
-                authButton.removeEventListener('touch', userManagerInstance.signinPopup);
+                // TODO: Build the profile display for the user and do highlighting in the DOM!
             };
 
             var handleUpdateNavToRequiresAuthentication = function() {
@@ -49,87 +45,59 @@
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Bound interactions for nav button for authentication', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
                 });
+            };
 
-                authButton.addEventListener('click', userManagerInstance.signinPopup);
-                authButton.addEventListener('tap',   userManagerInstance.signinPopup);
-                authButton.addEventListener('touch', userManagerInstance.signinPopup);
+            var handleFetchUserProfileData = function() {
+                // TODO: Set cache on Steam64!
+
+                // TODO: Check local cache and either use what is there if it exists and is valid, or fetch a new set of data
             };
 
             return {
                 __init: function() {
-                    window[rootObjectName].awaitModulePrepared('OpenID', function() {
-                        window[rootObjectName].awaitModulePrepared('Debug', function() {
-                            window[rootObjectName].Debug.writeConsoleMessage('Initializing Steam authentication', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                        });
+                    window[rootObjectName].awaitModulePrepared('ULR', function() {
+                        // TL`DR, this sets up a browser-side 'session' flow where the response can be read from the URL
+                        document.getElementById('steamAuth').setAttribute(
+                            'href',
+                            'https://steamcommunity.com/openid/login?' +
+                                'openid.claimed_id=' + encodeURIComponent('http://specs.openid.net/auth/2.0/identifier_select') + '&' +
+                                'openid.identity='   + encodeURIComponent('http://specs.openid.net/auth/2.0/identifier_select') + '&' +
+                                'openid.mode='       + encodeURIComponent('checkid_setup') +                                      '&' +
+                                'openid.ns='         + encodeURIComponent('http://specs.openid.net/auth/2.0') +                   '&' +
+                                'openid.realm='      + encodeURIComponent(window.location.origin) +                               '&' +
+                                'openid.return_to='  + encodeURIComponent(window.location.origin + window.location.pathname)
+                        );
 
-                        Oidc.Log.logger = {
-                            log: function(message) {
-                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    if (typeof(message) === 'string') {
-                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_LOG);
-                                    } else {
-                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_LOG);
-                                    }
-                                }.bind(this, message));
-                            },
+                        // FIRST, check to see if our LS store has a valid entry that has not expired (We are going to locally store the Steam64 for 1 week)
+                        try {
+                            var steamAuthChallenge = window.localStorage.getItem('OAAGGS64');
 
-                            warn: function(message) {
-                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    if (typeof(message) === 'string') {
-                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_WARN);
-                                    } else {
-                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_WARN);
-                                    }
-                                }.bind(this, message));
-                            },
+                            // Do we have a valid and non-expired Steam64 in cache?
+                            if (!steamAuthChallenge || (!steamAuthChallenge.indexOf(':') > -1)) {
+                                // Check our response URL...we might already have this data available
+                                var identity = window[rootObjectName].URL.searchParamValue('openid.identity');
 
-                            info: function(message) {
-                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    if (typeof(message) === 'string') {
-                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                                    } else {
-                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                                    }
-                                }.bind(this, message));
-                            },
+                                if (identity && (identity = identity.replace(/^https:\/\/steamcommunity.com\/openid\/id\//, ''))) {
+                                    userSteam64 = identity;
 
-                            debug: function(message) {
-                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    if (typeof(message) === 'string') {
-                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_DEBUG);
-                                    } else {
-                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_DEBUG);
-                                    }
-                                }.bind(this, message));
-                            },
+                                    handleFetchUserProfileData();
+                                } else {
+                                    handleUpdateNavToRequiresAuthentication();
+                                }
+                            } else {
+                                var steamAuthSet = steamAuthChallenge.split(':');
 
-                            error: function(message) {
-                                window[rootObjectName].awaitModulePrepared('Debug', function(message) {
-                                    if (typeof(message) === 'string') {
-                                        window[rootObjectName].Debug.writeConsoleMessage(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
-                                    } else {
-                                        window[rootObjectName].Debug.writeConsoleObject(message, 'SteamAuth-OIDC', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
-                                    }
-                                }.bind(this, message));
+                                if (steamAuthSet[0] < Date.now()) {
+                                    userSteam64 = steamAuthSet[1];
+
+                                    handleUpdateNavToRequiresAuthentication();
+                                } else {
+                                    handleFetchUserProfileData();
+                                }
                             }
-                        };
-
-                        userManagerInstance = new Oidc.UserManager({
-                            authority: 'https://steamcommunity.com/openid/',
-                            client_id: '0FA551D64997BEF92A8FC8CBB1ECBA2B',
-                            redirect_uri: window.location.origin + window.location.pathname,
-                            scope: 'openid',
-                            userStore: new Oidc.WebStorageStateStore({
-                                store: window.localStorage
-                            }),
-                            checkSessionInterval: 30000,
-                            popupWindowTarget: window.open,
-                            automaticSilentRenew: true,
-                        });
-
-                        userManagerInstance.getUser()
-                            .then(handleUpdateNavToAuthenticated)
-                            .catch(handleUpdateNavToRequiresAuthentication);
+                        } catch (e) {
+                            // TODO: Handle private browsing mode maybe?  IOS throws an exception here if we are in private browsing mode
+                        }
                     });
                 }.bind(this),
 

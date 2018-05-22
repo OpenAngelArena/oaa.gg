@@ -95,12 +95,14 @@ body {
       &:not(.loading) {
         .steamLoader {
           opacity: 0;
+          pointer-events: none;
         }
       }
       &.loading {
         #steamAuth,
         .steamProfile {
           opacity: 0;
+          pointer-events: none;
         }
       }
 
@@ -144,10 +146,10 @@ body {
 
   // Body should grow to meet the natural page size
   & > main {
-    width:        100%;
-    max-width:    1120px;
-    margin:       0 auto;
-    font-family:  "Lato", serif;
+    width:       100%;
+    max-width:   1120px;
+    margin:      0 auto;
+    font-family: "Lato", serif;
 
     @include flex-grow(1);
     @include flex-shrink(0);
