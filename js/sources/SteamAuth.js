@@ -48,7 +48,7 @@
             };
 
             var handleFetchUserProfileData = function() {
-                // TODO: Set cache on Steam64!
+                window.localStorage.setItem('OAAGGS64', (Date.now() + 604800000) + ':' + userSteam64);
 
                 // TODO: Check local cache and either use what is there if it exists and is valid, or fetch a new set of data
             };
