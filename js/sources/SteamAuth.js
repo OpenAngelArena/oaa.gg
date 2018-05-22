@@ -28,7 +28,7 @@
                     var parts = userDataStr.split(':');
                     var expiration = parts.splice(0, 1);
 
-                    if (expiration < Date.now()) {
+                    if (expiration > Date.now()) {
                         handleProfileDataForUserAvailable(parts.join(':'));
                     }
                 }
@@ -44,9 +44,9 @@
 
                                 handleProfileDataForUserAvailable(responseText);
                             })
-                            .catch(handleProfileDataForUserUnableToBeResolved)
+                            .catch(handleProfileDataForUserUnableToBeResolved);
                     })
-                    .catch(handleProfileDataForUserUnableToBeResolved)
+                    .catch(handleProfileDataForUserUnableToBeResolved);
             };
 
             var handleProfileDataForUserAvailable = function(userDataString) {
@@ -126,7 +126,7 @@
                             } else {
                                 var steamAuthSet = steamAuthChallenge.split(':');
 
-                                if (steamAuthSet[0] < Date.now()) {
+                                if (steamAuthSet[0] > Date.now()) {
                                     userSteam64 = steamAuthSet[1];
 
                                     handleUpdateNavToRequiresAuthentication();
