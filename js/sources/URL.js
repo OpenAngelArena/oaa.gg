@@ -4,12 +4,12 @@
     window[rootObjectName].ready(function() {
         /**
          * @type {{
-         *   searchParams: Function,
+         *   searchParams:      Function,
          *   searchParamExists: Function,
-         *   searchParamValue: Function,
-         *   anchorParams: Function,
+         *   searchParamValue:  Function,
+         *   anchorParams:      Function,
          *   anchorParamExists: Function,
-         *   anchorParamValue: Function,
+         *   anchorParamValue:  Function,
          * }} window[rootObjectName].URL
          */
         window[rootObjectName].URL = (function () {

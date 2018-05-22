@@ -8,8 +8,8 @@
             var onAuthenticatedCallbacks = [];
             var hasBeenAuthenticated     = false;
 
-            var handleUpdateNavToAuthenticated = function(steam64) {
-                if (!steam64) {
+            var handleUpdateNavToAuthenticated = function() {
+                if (!userSteam64) {
                     handleUpdateNavToRequiresAuthentication();
                 }
 
@@ -18,6 +18,70 @@
                 });
 
                 hasBeenAuthenticated = true;
+
+                // Now build the profile display for the user and do highlighting in the DOM
+                // TODO: Maybe we should use an internal proxy instead of a service that might disappear?
+                var userDataStr = window.localStorage.getItem('OAAGGSUP');
+
+                if (userDataStr) {
+                    var parts = userDataStr.split(':');
+                    var expiration = parts.splice(0, 1);
+
+                    if (expiration < Date.now()) {
+                        handleProfileDataForUserAvailable(parts.join(':'));
+                    }
+                }
+
+                // If we got here...userdata doesn't exist, so fetch it
+                window.fetch('https://cors.io?https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=0FA551D64997BEF92A8FC8CBB1ECBA2B&steamids=76561198001344723', {
+                    cache: "default",
+                })
+                    .then(function(response) {
+                        response.text()
+                            .then(function(responseText) {
+                                // Doing this because browsers can decide to auto-parse this sometimes
+                                var response = ((typeof(responseText) === 'string') ? JSON.parse(responseText) : responseText);
+
+                                // Make sure we are only working on the profile we want...
+                                /**
+                                 * @var {{
+                                 *  response: {
+                                 *    players: []
+                                 *  }
+                                 * }} response
+                                 */
+                                if (response.response && response.response.players) {
+                                    var i = 0;
+                                    var j = response.response.players.length;
+                                    var found = false;
+
+                                    for (i; i < j; i++) {
+                                        if (response.response.players[i].steamid && (response.response.players[i].steamid === userSteam64)) {
+                                            responseText = JSON.stringify(response.response.players[i]);
+
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!found) {
+                                        handleProfileDataForUserUnableToBeResolved(new Error('Player data not verified in response!'));
+
+                                        return;
+                                    }
+                                }
+
+                                window.localStorage.setItem('OAAGGSUP', (Date.now() + 604800000) + ':' + responseText);
+
+                                handleProfileDataForUserAvailable(responseText);
+                            })
+                            .catch(handleProfileDataForUserUnableToBeResolved)
+                    })
+                    .catch(handleProfileDataForUserUnableToBeResolved)
+            };
+
+            var handleProfileDataForUserAvailable = function(userDataString) {
+
 
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
@@ -29,8 +93,13 @@
                 for (i; i < j; i++) {
                     window[rootObjectName].handleRunCallback(onAuthenticatedCallbacks[i]);
                 }
+            };
 
-                // TODO: Build the profile display for the user and do highlighting in the DOM!
+            var handleProfileDataForUserUnableToBeResolved = function(error) {
+                window[rootObjectName].awaitModulePrepared('Debug', function(error) {
+                    window[rootObjectName].Debug.writeConsoleMessage('User profile data was unable to be fetched!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
+                    window[rootObjectName].Debug.writeConsoleObject(error, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
+                }.bind(this, error));
             };
 
             var handleUpdateNavToRequiresAuthentication = function() {
@@ -51,6 +120,7 @@
                 window.localStorage.setItem('OAAGGS64', (Date.now() + 604800000) + ':' + userSteam64);
 
                 // TODO: Check local cache and either use what is there if it exists and is valid, or fetch a new set of data
+                handleUpdateNavToAuthenticated();
             };
 
             return {
@@ -110,11 +180,11 @@
                 }.bind(this),
 
                 get currentUserSteam32() {
-                    return 0;
+                    return userSteam64 - 76561197960265728;
                 },
 
                 get currentUserSteam64() {
-                    return 0;
+                    return userSteam64;
                 },
             };
         }());
