@@ -7,7 +7,6 @@
             var userSteamProfileData     = null;
             var onAuthenticatedCallbacks = [];
             var hasBeenAuthenticated     = false;
-            var apiKey                   = '0FA551D64997BEF92A8FC8CBB1ECBA2B'; // TODO: Shouldn't this be linked to the main OAA account instead of mine?
 
             var handleUpdateNavToAuthenticated = function() {
                 if (!userSteam64) {
@@ -21,15 +20,16 @@
                 hasBeenAuthenticated = true;
 
                 // Now build the profile display for the user and do highlighting in the DOM
-                // TODO: Maybe we should use an internal proxy instead of a service that might disappear?
                 var userDataStr = window.localStorage.getItem('OAAGGSUP');
 
                 if (userDataStr) {
                     var parts = userDataStr.split(':');
-                    var expiration = parts.splice(0, 1);
+                    var expiration = Number(parts.splice(0, 1));
 
                     if (expiration > Date.now()) {
                         handleProfileDataForUserAvailable(parts.join(':'));
+
+                        return;
                     }
                 }
 
@@ -40,7 +40,8 @@
                     .then(function(response) {
                         response.text()
                             .then(function(responseText) {
-                                window.localStorage.setItem('OAAGGSUP', (Date.now() + 604800000) + ':' + responseText);
+                                // Cached for 5 minutes at a time
+                                window.localStorage.setItem('OAAGGSUP', (Date.now() + 300000) + ':' + responseText);
 
                                 handleProfileDataForUserAvailable(responseText);
                             })
@@ -50,6 +51,9 @@
             };
 
             var handleProfileDataForUserAvailable = function(userDataString) {
+                // Make a workable object here
+                userSteamProfileData = JSON.parse(userDataString);
+
                 // TODO: Populate DOM
 
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
@@ -86,9 +90,10 @@
             };
 
             var handleFetchUserProfileData = function() {
+                // Cached for 1 week at a time
+                // TODO: Need to make a clear case for this information!
                 window.localStorage.setItem('OAAGGS64', (Date.now() + 604800000) + ':' + userSteam64);
 
-                // TODO: Check local cache and either use what is there if it exists and is valid, or fetch a new set of data
                 handleUpdateNavToAuthenticated();
             };
 
@@ -112,7 +117,7 @@
                             var steamAuthChallenge = window.localStorage.getItem('OAAGGS64');
 
                             // Do we have a valid and non-expired Steam64 in cache?
-                            if (!steamAuthChallenge || (!steamAuthChallenge.indexOf(':') > -1)) {
+                            if (!steamAuthChallenge || (!steamAuthChallenge.indexOf(':') == -1)) {
                                 // Check our response URL...we might already have this data available
                                 var identity = window[rootObjectName].URL.searchParamValue('openid.identity');
 
@@ -126,7 +131,7 @@
                             } else {
                                 var steamAuthSet = steamAuthChallenge.split(':');
 
-                                if (steamAuthSet[0] > Date.now()) {
+                                if (Number(steamAuthSet[0]) > Date.now()) {
                                     userSteam64 = steamAuthSet[1];
 
                                     handleUpdateNavToRequiresAuthentication();
