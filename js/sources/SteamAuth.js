@@ -117,7 +117,7 @@
                             var steamAuthChallenge = window.localStorage.getItem('OAAGGS64');
 
                             // Do we have a valid and non-expired Steam64 in cache?
-                            if (!steamAuthChallenge || (!steamAuthChallenge.indexOf(':') == -1)) {
+                            if (!steamAuthChallenge || (steamAuthChallenge.indexOf(':') === -1)) {
                                 // Check our response URL...we might already have this data available
                                 var identity = window[rootObjectName].URL.searchParamValue('openid.identity');
 
@@ -134,9 +134,9 @@
                                 if (Number(steamAuthSet[0]) > Date.now()) {
                                     userSteam64 = steamAuthSet[1];
 
-                                    handleUpdateNavToRequiresAuthentication();
-                                } else {
                                     handleFetchUserProfileData();
+                                } else {
+                                    handleUpdateNavToRequiresAuthentication();
                                 }
                             }
                         } catch (e) {
