@@ -92,7 +92,8 @@ body {
     .steamAuth {
       position: relative;
 
-      &:not(.loading) {
+      &:not(.loading),
+      &:not(.loaded) {
         .steamLoader {
           opacity: 0;
           pointer-events: none;
@@ -105,11 +106,27 @@ body {
           pointer-events: none;
         }
       }
+      &.loaded {
+        #steamAuth {
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
 
       & > * {
         @extend %transitionable;
       }
 
+      .OAADownloadLink {
+        text-align: center;
+        line-height: 1.4em;
+        padding: 2px;
+
+        @extend %flexBox;
+
+        @include justify-content(center);
+        @include align-items(center);
+      }
       .steamLoader {
         position: absolute;
         width:    100%;
@@ -119,6 +136,13 @@ body {
 
         @include justify-content(center);
         @include align-items(center);
+      }
+      #steamProfile {
+        position: absolute;
+        top:      0;
+        left:     0;
+        right:    0;
+        bottom:   0;
       }
       #steamAuth {
         background: transparent;

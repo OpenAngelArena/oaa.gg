@@ -65,7 +65,15 @@
                 // TODO: Populate DOM
                 if (userSteamProfileData && userSteamProfileData.statusCode && (userSteamProfileData.statusCode === 404)) {
                     // Tell the user to play and maybe link the steam workshop page here?
-                    $steamProfile.innerHTML = 'Go play Open Angel Arena to become ranked!'; // TODO: Make this better...this verbiage is awful
+                    var $OAADownloadLink = document.createElement('a');
+
+                    $OAADownloadLink.classList.add('OAADownloadLink');
+
+                    $OAADownloadLink.setAttribute('target', '_blank');
+                    $OAADownloadLink.setAttribute('href', 'https://steamcommunity.com/sharedfiles/filedetails/?id=881541807');
+                    $OAADownloadLink.innerHTML = 'Subscribe<br />to play';
+
+                    $steamProfile.appendChild($OAADownloadLink);
                 } else if (userSteamProfileData && userSteamProfileData.steamid && userSteamProfileData.profile) {
                     // Build the nav for your MMR
                     var $nameContainer = document.createElement('div');
@@ -103,6 +111,9 @@
                 } else {
                     // TODO: Catch?
                 }
+
+                $steamProfile.classList.remove('loading');
+                $steamProfile.classList.add('loaded');
 
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
