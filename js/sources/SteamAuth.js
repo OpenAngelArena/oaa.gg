@@ -54,7 +54,55 @@
                 // Make a workable object here
                 userSteamProfileData = JSON.parse(userDataString);
 
+                /**
+                 * @var {HTMLElement} $steamProfile
+                 */
+                var $steamProfile = document.getElementById('steamProfile');
+
+                // In the event this gets run again (Say we are testing, or someone puts something in there as a placeholder etc.) Clear out this element quickly
+                $steamProfile.innerHTML = '';
+
                 // TODO: Populate DOM
+                if (userSteamProfileData && userSteamProfileData.statusCode && (userSteamProfileData.statusCode === 404)) {
+                    // Tell the user to play and maybe link the steam workshop page here?
+                    $steamProfile.innerHTML = 'Go play Open Angel Arena to become ranked!'; // TODO: Make this better...this verbiage is awful
+                } else if (userSteamProfileData && userSteamProfileData.steamid && userSteamProfileData.profile) {
+                    // Build the nav for your MMR
+                    var $nameContainer = document.createElement('div');
+                    var $unrankedMMR = document.createElement('div');
+                    var $rankedMMR = document.createElement('div');
+                    var $MMRContainer = document.createElement('div');
+
+                    var $unrankedMMRNumber = document.createElement('span');
+                    var $rankedMMRNumber = document.createElement('span');
+
+                    $nameContainer.innerHTML = userSteamProfileData.profile.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+                    $unrankedMMRNumber.innerHTML = userSteamProfileData.unrankedMMR;
+                    $rankedMMRNumber.innerHTML = userSteamProfileData.rankedMMR;
+
+                    $unrankedMMR.appendChild($unrankedMMRNumber);
+                    $rankedMMRNumber.appendChild($rankedMMRNumber);
+
+                    $MMRContainer.appendChild($unrankedMMR);
+                    $MMRContainer.appendChild($rankedMMR);
+
+                    $steamProfile.appendChild($rankedMMRNumber);
+
+                    $steamProfile.appendChild($nameContainer);
+                    $steamProfile.appendChild($MMRContainer);
+
+                    // Make their avatar available in layout?
+                    if (userSteamProfileData.profile.avatar) {
+                        var $userAvatar = document.createElement('img');
+
+                        $userAvatar.setAttrinute('src', userSteamProfileData.profile.avatar);
+
+                        $steamProfile.appendChild($userAvatar);
+                    }
+                } else {
+                    // TODO: Catch?
+                }
 
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
