@@ -95,20 +95,20 @@ body {
       &:not(.loading),
       &:not(.loaded) {
         .steamLoader {
-          opacity: 0;
+          opacity:        0;
           pointer-events: none;
         }
       }
       &.loading {
         #steamAuth,
         .steamProfile {
-          opacity: 0;
+          opacity:        0;
           pointer-events: none;
         }
       }
       &.loaded {
         #steamAuth {
-          opacity: 0;
+          opacity:        0;
           pointer-events: none;
         }
       }
@@ -118,9 +118,10 @@ body {
       }
 
       .OAADownloadLink {
-        text-align: center;
+        text-align:  center;
         line-height: 1.4em;
-        padding: 2px;
+        padding:     2px;
+        height:      100%;
 
         @extend %flexBox;
 
