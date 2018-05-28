@@ -118,6 +118,9 @@ body {
           opacity:        0;
           pointer-events: none;
         }
+        #steamProfile {
+          pointer-events: all;
+        }
       }
 
       & > * {
@@ -170,7 +173,6 @@ body {
           font-size:   1.1rem;
           padding:     2px;
         }
-
         .OAARankedMMR {
           position:       absolute;
           top:            100%;
@@ -188,7 +190,6 @@ body {
           &::before {
             content: 'Ranked: ';
           }
-
           &::after {
             content:    '';
             background: inherit;
@@ -203,7 +204,6 @@ body {
             @include transform(translate(-50%, 6px) rotate(45deg));
           }
         }
-
         .OAAMMRValues {
           text-align: center;
           margin-top: auto;
@@ -213,7 +213,6 @@ body {
           @include justify-content(center);
           @include align-items(center);
         }
-
         .OAAUnrankedMMR {
           padding: 1px 2px;
 
