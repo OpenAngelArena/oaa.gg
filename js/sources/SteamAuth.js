@@ -68,71 +68,70 @@
                 $steamProfile.innerHTML = '';
 
                 // TODO: Populate DOM
-                if (userSteamProfileData && userSteamProfileData.statusCode && (userSteamProfileData.statusCode === 404)) {
-                    window[rootObjectName].awaitModulePrepared('Debug', function() {
-                        window[rootObjectName].Debug.writeConsoleMessage('User was not able to be found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                    });
+                try {
+                    if (userSteamProfileData && userSteamProfileData.statusCode && (userSteamProfileData.statusCode === 404)) {
+                        window[rootObjectName].awaitModulePrepared('Debug', function() {
+                            window[rootObjectName].Debug.writeConsoleMessage('User was not able to be found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                        });
 
-                    // Tell the user to play and maybe link the steam workshop page here?
-                    var $OAADownloadLink = document.createElement('a');
+                        // Tell the user to play and maybe link the steam workshop page here?
+                        var $OAADownloadLink = document.createElement('a');
 
-                    $OAADownloadLink.classList.add('OAADownloadLink');
+                        $OAADownloadLink.classList.add('OAADownloadLink');
 
-                    $OAADownloadLink.setAttribute('target', '_blank');
-                    $OAADownloadLink.setAttribute('href', 'https://steamcommunity.com/sharedfiles/filedetails/?id=881541807');
-                    $OAADownloadLink.innerHTML = 'Subscribe<br />to play';
+                        $OAADownloadLink.setAttribute('target', '_blank');
+                        $OAADownloadLink.setAttribute('href', 'https://steamcommunity.com/sharedfiles/filedetails/?id=881541807');
+                        $OAADownloadLink.innerHTML = 'Subscribe<br />to play';
 
-                    $steamProfile.appendChild($OAADownloadLink);
-                } else if (userSteamProfileData && userSteamProfileData.steamid && userSteamProfileData.profile) {
-                    window[rootObjectName].awaitModulePrepared('Debug', function() {
-                        window[rootObjectName].Debug.writeConsoleMessage('User found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                    });
+                        $steamProfile.appendChild($OAADownloadLink);
+                    } else if (userSteamProfileData && userSteamProfileData.steamid && userSteamProfileData.profile) {
+                        window[rootObjectName].awaitModulePrepared('Debug', function() {
+                            window[rootObjectName].Debug.writeConsoleMessage('User found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                        });
 
-                    // Build the nav for your MMR
-                    var $nameContainer = document.createElement('div');
-                    var $unrankedMMR = document.createElement('div');
-                    var $rankedMMR = document.createElement('div');
-                    var $MMRContainer = document.createElement('div');
+                        // Build the nav for your MMR
+                        var $nameContainer = document.createElement('div');
+                        var $unrankedMMR = document.createElement('div');
+                        var $rankedMMR = document.createElement('div');
+                        var $MMRContainer = document.createElement('div');
 
-                    var $unrankedMMRNumber = document.createElement('span');
-                    var $rankedMMRNumber = document.createElement('span');
+                        var $unrankedMMRNumber = document.createElement('span');
+                        var $rankedMMRNumber = document.createElement('span');
 
-                    $nameContainer.innerHTML = userSteamProfileData.profile.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                        $nameContainer.innerHTML = userSteamProfileData.profile.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-                    $unrankedMMRNumber.innerHTML = userSteamProfileData.unrankedMMR;
-                    $rankedMMRNumber.innerHTML = userSteamProfileData.rankedMMR;
+                        $unrankedMMRNumber.innerHTML = userSteamProfileData.unrankedMMR;
+                        $rankedMMRNumber.innerHTML = userSteamProfileData.rankedMMR;
 
-                    $unrankedMMR.appendChild($unrankedMMRNumber);
-                    $rankedMMRNumber.appendChild($rankedMMRNumber);
+                        $unrankedMMR.appendChild($unrankedMMRNumber);
+                        $rankedMMRNumber.appendChild($rankedMMRNumber);
 
-                    $MMRContainer.appendChild($unrankedMMR);
-                    $MMRContainer.appendChild($rankedMMR);
+                        $MMRContainer.appendChild($unrankedMMR);
+                        $MMRContainer.appendChild($rankedMMR);
 
-                    $steamProfile.appendChild($rankedMMRNumber);
+                        $steamProfile.appendChild($rankedMMRNumber);
 
-                    $steamProfile.appendChild($nameContainer);
-                    $steamProfile.appendChild($MMRContainer);
+                        $steamProfile.appendChild($nameContainer);
+                        $steamProfile.appendChild($MMRContainer);
 
-                    // Make their avatar available in layout?
-                    if (userSteamProfileData.profile.avatar) {
-                        var $userAvatar = document.createElement('img');
+                        // Make their avatar available in layout?
+                        if (userSteamProfileData.profile.avatar) {
+                            var $userAvatar = document.createElement('img');
 
-                        $userAvatar.setAttrinute('src', userSteamProfileData.profile.avatar);
+                            $userAvatar.setAttrinute('src', userSteamProfileData.profile.avatar);
 
-                        $steamProfile.appendChild($userAvatar);
+                            $steamProfile.appendChild($userAvatar);
+                        }
+                    } else {
+                        window[rootObjectName].awaitModulePrepared('Debug', function() {
+                            window[rootObjectName].Debug.writeConsoleMessage('User data appears corrupted?', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                        });
+
+                        // TODO: Catch?
                     }
-                } else {
-                    window[rootObjectName].awaitModulePrepared('Debug', function() {
-                        window[rootObjectName].Debug.writeConsoleMessage('User data appears corrupted?', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                    });
-
-                    // TODO: Catch?
+                } catch (e) {
+                    console.error(e);
                 }
-
-                window[rootObjectName].awaitModulePrepared('Debug', function($steamProfile) {
-                    window[rootObjectName].Debug.writeConsoleObject($steamProfile, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
-                    window[rootObjectName].Debug.writeConsoleObject($steamProfile.outerHTML, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
-                }.bind(this, $steamProfile));
 
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
