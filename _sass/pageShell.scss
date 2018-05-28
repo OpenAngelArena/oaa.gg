@@ -112,6 +112,13 @@ body {
           pointer-events: none;
         }
       }
+      &.authenticated {
+        .steamLoader,
+        #steamAuth {
+          opacity:        0;
+          pointer-events: none;
+        }
+      }
 
       & > * {
         @extend %transitionable;

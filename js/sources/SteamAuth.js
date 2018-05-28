@@ -139,14 +139,23 @@
                     // TODO: Catch?
                 }
 
+                var steamAuthElements = document.querySelectorAll('.steamAuth');
+                var i = 0;
+                var j = steamAuthElements.length;
+
+                for (i; i < j; i++) {
+                    steamAuthElements[i].classList.remove('loading');
+                    steamAuthElements[i].classList.add('authenticated');
+                }
+
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
                 });
 
                 // Highlight any Steam32 segments we have in the DOM
                 var items = document.querySelectorAll('.OAAS32_' + window[rootObjectName].SteamAuth.currentUserSteam32);
-                var i = 0;
-                var j = items.length;
+                i = 0;
+                j = items.length;
 
                 for (i; i < j; i++) {
                     items[i].classList.add('OAA_currentSteamUser');
