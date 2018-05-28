@@ -213,7 +213,43 @@
                 }.bind(this),
 
                 get currentUserSteam32() {
-                    return (Number(userSteam64) - 76561197960265728).toString();
+                    // Split the string into char arrays sop we can do the math manually (Doing the plan math will always fail...)
+                    var steam64chars     = userSteam64.split('').reverse();
+                    var steamTConstChars = '76561197960265728'.split('').reverse();
+                    var steam32Chars     = [];
+
+                    var i = 0;
+                    var j = steam64chars.length;
+
+                    var carry = false;
+                    var baseInt;
+                    var subtInt;
+                    var resultInt;
+
+                    // TODO: Maybe there is a case where the 64 is less than the translation constant?
+                    for (i; i < j; i++) {
+                        baseInt = Number(steam64chars[i]);
+                        subtInt = Number(steamTConstChars[i]);
+
+                        // Are we carrying a number from the last operation?
+                        if (carry) {
+                            baseInt = (baseInt - 1);
+                        }
+
+                        carry = false;
+
+                        resultInt = baseInt - subtInt;
+
+                        if (resultInt < 0) {
+                            resultInt = (resultInt + 10);
+
+                            carry = true;
+                        }
+
+                        steam32Chars.push(resultInt.toString());
+                    }
+
+                    return steam32Chars.reverse().join('').replace(/^[0]+/, '');
                 },
 
                 get currentUserSteam64() {

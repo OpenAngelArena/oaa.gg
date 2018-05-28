@@ -41,7 +41,7 @@
                             var name = document.createElement('td');
                             var mmr = document.createElement('td');
 
-                            row.setAttribute('id', 'OAAMMR_' + rowData.steamid); // Used to highlight the current user if we happen to have a Steam ID to look up
+                            row.classList.add('OAAS32_' + rowData.steamid); // Used to highlight the current user if we happen to have a Steam ID to look up
 
                             ranking.innerHTML = rowData.ranking.toString();
                             name.innerHTML = rowData.name.toString();
