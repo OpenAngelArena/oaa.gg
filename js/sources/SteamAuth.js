@@ -54,6 +54,11 @@
                 // Make a workable object here
                 userSteamProfileData = JSON.parse(userDataString);
 
+                window[rootObjectName].awaitModulePrepared('Debug', function(userSteamProfileData) {
+                    window[rootObjectName].Debug.writeConsoleMessage('Current authenticated user object', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                    window[rootObjectName].Debug.writeConsoleObject(userSteamProfileData, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                }.bind(this, userSteamProfileData));
+
                 /**
                  * @var {HTMLElement} $steamProfile
                  */
@@ -64,6 +69,10 @@
 
                 // TODO: Populate DOM
                 if (userSteamProfileData && userSteamProfileData.statusCode && (userSteamProfileData.statusCode === 404)) {
+                    window[rootObjectName].awaitModulePrepared('Debug', function() {
+                        window[rootObjectName].Debug.writeConsoleMessage('User was not able to be found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                    });
+
                     // Tell the user to play and maybe link the steam workshop page here?
                     var $OAADownloadLink = document.createElement('a');
 
@@ -75,6 +84,10 @@
 
                     $steamProfile.appendChild($OAADownloadLink);
                 } else if (userSteamProfileData && userSteamProfileData.steamid && userSteamProfileData.profile) {
+                    window[rootObjectName].awaitModulePrepared('Debug', function() {
+                        window[rootObjectName].Debug.writeConsoleMessage('User found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                    });
+
                     // Build the nav for your MMR
                     var $nameContainer = document.createElement('div');
                     var $unrankedMMR = document.createElement('div');
@@ -109,6 +122,10 @@
                         $steamProfile.appendChild($userAvatar);
                     }
                 } else {
+                    window[rootObjectName].awaitModulePrepared('Debug', function() {
+                        window[rootObjectName].Debug.writeConsoleMessage('User data appears corrupted?', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                    });
+
                     // TODO: Catch?
                 }
 
