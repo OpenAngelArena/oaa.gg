@@ -103,13 +103,19 @@
                         $unrankedMMRNumber.innerHTML = userSteamProfileData.unrankedMMR;
                         $rankedMMRNumber.innerHTML = userSteamProfileData.rankedMMR;
 
+                        $unrankedMMRNumber.classList.add('OAAUnrankedMMRValue');
+                        $rankedMMRNumber.classList.add('OAARankedMMRValue');
+
+                        $unrankedMMR.classList.add('OAAUnrankedMMR');
+                        $rankedMMR.classList.add('OAARankedMMR');
+
+                        $MMRContainer.classList.add('OAAMMRValues');
+
                         $unrankedMMR.appendChild($unrankedMMRNumber);
                         $rankedMMR.appendChild($rankedMMRNumber);
 
                         $MMRContainer.appendChild($unrankedMMR);
                         $MMRContainer.appendChild($rankedMMR);
-
-                        $steamProfile.appendChild($rankedMMRNumber);
 
                         $steamProfile.appendChild($nameContainer);
                         $steamProfile.appendChild($MMRContainer);
@@ -118,7 +124,9 @@
                         if (userSteamProfileData.profile.avatar) {
                             var $userAvatar = document.createElement('img');
 
-                            $userAvatar.setAttrinute('src', userSteamProfileData.profile.avatar);
+                            $userAvatar.setAttribute('src', userSteamProfileData.profile.avatar);
+
+                            $userAvatar.classList.add('SteamUserAvatar');
 
                             $steamProfile.appendChild($userAvatar);
                         }
