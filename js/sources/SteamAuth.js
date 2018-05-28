@@ -129,11 +129,10 @@
                     // TODO: Catch?
                 }
 
-                $steamProfile.classList.remove('loading');
-                $steamProfile.classList.add('loaded');
-
-                console.log($steamProfile);
-                console.log($steamProfile.outerHTML);
+                window[rootObjectName].awaitModulePrepared('Debug', function($steamProfile) {
+                    window[rootObjectName].Debug.writeConsoleObject($steamProfile, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
+                    window[rootObjectName].Debug.writeConsoleObject($steamProfile.outerHTML, 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_ERROR);
+                }.bind(this, $steamProfile));
 
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
