@@ -67,78 +67,76 @@
                 // In the event this gets run again (Say we are testing, or someone puts something in there as a placeholder etc.) Clear out this element quickly
                 $steamProfile.innerHTML = '';
 
-                // TODO: Populate DOM
-                try {
-                    if (userSteamProfileData && userSteamProfileData.statusCode && (userSteamProfileData.statusCode === 404)) {
-                        window[rootObjectName].awaitModulePrepared('Debug', function() {
-                            window[rootObjectName].Debug.writeConsoleMessage('User was not able to be found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                        });
+                if (userSteamProfileData && userSteamProfileData.statusCode && (userSteamProfileData.statusCode === 404)) {
+                    window[rootObjectName].awaitModulePrepared('Debug', function() {
+                        window[rootObjectName].Debug.writeConsoleMessage('User was not able to be found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                    });
 
-                        // Tell the user to play and maybe link the steam workshop page here?
-                        var $OAADownloadLink = document.createElement('a');
+                    // Tell the user to play and maybe link the steam workshop page here?
+                    var $OAADownloadLink = document.createElement('a');
 
-                        $OAADownloadLink.classList.add('OAADownloadLink');
+                    $OAADownloadLink.classList.add('OAADownloadLink');
 
-                        $OAADownloadLink.setAttribute('target', '_blank');
-                        $OAADownloadLink.setAttribute('href', 'https://steamcommunity.com/sharedfiles/filedetails/?id=881541807');
-                        $OAADownloadLink.innerHTML = 'Subscribe<br />to play';
+                    $OAADownloadLink.setAttribute('target', '_blank');
+                    $OAADownloadLink.setAttribute('href', 'https://steamcommunity.com/sharedfiles/filedetails/?id=881541807');
+                    $OAADownloadLink.innerHTML = 'Subscribe<br />to play';
 
-                        $steamProfile.appendChild($OAADownloadLink);
-                    } else if (userSteamProfileData && userSteamProfileData.steamid && userSteamProfileData.profile) {
-                        window[rootObjectName].awaitModulePrepared('Debug', function() {
-                            window[rootObjectName].Debug.writeConsoleMessage('User found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                        });
+                    $steamProfile.appendChild($OAADownloadLink);
+                } else if (userSteamProfileData && userSteamProfileData.steamid && userSteamProfileData.profile) {
+                    window[rootObjectName].awaitModulePrepared('Debug', function() {
+                        window[rootObjectName].Debug.writeConsoleMessage('User found in BottlePass server!', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                    });
 
-                        // Build the nav for your MMR
-                        var $nameContainer = document.createElement('div');
-                        var $unrankedMMR = document.createElement('div');
-                        var $rankedMMR = document.createElement('div');
-                        var $MMRContainer = document.createElement('div');
+                    // Build the nav for your MMR
+                    var $nameContainer = document.createElement('div');
+                    var $unrankedMMR = document.createElement('div');
+                    var $rankedMMR = document.createElement('div');
+                    var $MMRContainer = document.createElement('div');
 
-                        var $unrankedMMRNumber = document.createElement('span');
-                        var $rankedMMRNumber = document.createElement('span');
+                    var $unrankedMMRNumber = document.createElement('span');
+                    var $rankedMMRNumber = document.createElement('span');
 
-                        $nameContainer.innerHTML = userSteamProfileData.profile.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    $nameContainer.innerHTML = userSteamProfileData.profile.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-                        $unrankedMMRNumber.innerHTML = userSteamProfileData.unrankedMMR;
-                        $rankedMMRNumber.innerHTML = userSteamProfileData.rankedMMR;
+                    $nameContainer.classList.add('SteamUserName');
 
-                        $unrankedMMRNumber.classList.add('OAAUnrankedMMRValue');
-                        $rankedMMRNumber.classList.add('OAARankedMMRValue');
+                    $unrankedMMRNumber.innerHTML = userSteamProfileData.unrankedMMR;
+                    $rankedMMRNumber.innerHTML = userSteamProfileData.rankedMMR;
 
-                        $unrankedMMR.classList.add('OAAUnrankedMMR');
-                        $rankedMMR.classList.add('OAARankedMMR');
+                    $unrankedMMRNumber.classList.add('OAAUnrankedMMRValue');
+                    $rankedMMRNumber.classList.add('OAARankedMMRValue');
 
-                        $MMRContainer.classList.add('OAAMMRValues');
+                    $unrankedMMR.classList.add('OAAUnrankedMMR');
+                    $rankedMMR.classList.add('OAARankedMMR');
 
-                        $unrankedMMR.appendChild($unrankedMMRNumber);
-                        $rankedMMR.appendChild($rankedMMRNumber);
+                    $MMRContainer.classList.add('OAAMMRValues');
 
-                        $MMRContainer.appendChild($unrankedMMR);
-                        $MMRContainer.appendChild($rankedMMR);
+                    $unrankedMMR.appendChild($unrankedMMRNumber);
+                    $rankedMMR.appendChild($rankedMMRNumber);
 
-                        $steamProfile.appendChild($nameContainer);
-                        $steamProfile.appendChild($MMRContainer);
+                    $MMRContainer.appendChild($unrankedMMR);
+                    $MMRContainer.appendChild($rankedMMR);
 
-                        // Make their avatar available in layout?
-                        if (userSteamProfileData.profile.avatar) {
-                            var $userAvatar = document.createElement('img');
+                    $steamProfile.appendChild($nameContainer);
+                    $steamProfile.appendChild($MMRContainer);
 
-                            $userAvatar.setAttribute('src', userSteamProfileData.profile.avatar);
+                    // Make their avatar available in layout?
+                    if (userSteamProfileData.profile.avatar) {
+                        var $userAvatar = document.createElement('img');
 
-                            $userAvatar.classList.add('SteamUserAvatar');
+                        $userAvatar.setAttribute('src', userSteamProfileData.profile.avatar);
 
-                            $steamProfile.appendChild($userAvatar);
-                        }
-                    } else {
-                        window[rootObjectName].awaitModulePrepared('Debug', function() {
-                            window[rootObjectName].Debug.writeConsoleMessage('User data appears corrupted?', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
-                        });
+                        $userAvatar.classList.add('SteamUserAvatar');
 
-                        // TODO: Catch?
+                        // Aside Avatar for the moment
+                        // $steamProfile.appendChild($userAvatar);
                     }
-                } catch (e) {
-                    console.error(e);
+                } else {
+                    window[rootObjectName].awaitModulePrepared('Debug', function() {
+                        window[rootObjectName].Debug.writeConsoleMessage('User data appears corrupted?', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
+                    });
+
+                    // TODO: Catch?
                 }
 
                 window[rootObjectName].awaitModulePrepared('Debug', function() {

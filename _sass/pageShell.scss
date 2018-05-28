@@ -139,11 +139,81 @@ body {
         @include align-items(center);
       }
       #steamProfile {
-        position: absolute;
-        top:      0;
-        left:     0;
-        right:    0;
-        bottom:   0;
+        position:       absolute;
+        top:            0;
+        left:           0;
+        right:          0;
+        bottom:         0;
+        pointer-events: none;
+
+        @extend %flexBox;
+
+        @include flex-direction(column);
+
+        &:hover {
+          .OAARankedMMR {
+            opacity:        1;
+            pointer-events: all;
+          }
+        }
+
+        .SteamUserName {
+          text-align:  center;
+          font-weight: bold;
+          font-size:   1.1rem;
+          padding:     2px;
+        }
+
+        .OAARankedMMR {
+          position:       absolute;
+          top:            100%;
+          right:          0;
+          opacity:        0;
+          pointer-events: none;
+          transition:     .3s ease-out;
+          min-width:      100%;
+          margin-top:     7px;
+          background:     #375A7F;
+          padding:        3px 2px;
+          line-height:    1em;
+          border-radius:  3px;
+
+          &::before {
+            content: 'Ranked: ';
+          }
+
+          &::after {
+            content:    '';
+            background: inherit;
+            bottom:     100%;
+            left:       50%;
+            border:     4px solid #375A7F;
+            width:      12px;
+            height:     12px;
+            position:   absolute;
+            z-index:    -1;
+
+            @include transform(translate(-50%, 6px) rotate(45deg));
+          }
+        }
+
+        .OAAMMRValues {
+          text-align: center;
+          margin-top: auto;
+
+          @extend %flexBox;
+
+          @include justify-content(center);
+          @include align-items(center);
+        }
+
+        .OAAUnrankedMMR {
+          padding: 1px 2px;
+
+          &::before {
+            content: 'Unranked: ';
+          }
+        }
       }
       #steamAuth {
         background: transparent;
@@ -151,6 +221,8 @@ body {
         border:     0;
         cursor:     pointer;
         padding:    7px 11px;
+        position:   relative;
+        z-index:    10;
 
         @extend %flexBox;
 
