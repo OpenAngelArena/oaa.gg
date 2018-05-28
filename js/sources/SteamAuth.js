@@ -119,8 +119,17 @@
                     window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
                 });
 
+                // Highlight any Steam32 segments we have in the DOM
+                var items = document.querySelectorAll('.OAAS32_' + window[rootObjectName].SteamAuth.currentUserSteam32);
                 var i = 0;
-                var j = onAuthenticatedCallbacks.length;
+                var j = items.length;
+
+                for (i; i < j; i++) {
+                    items[i].classList.add('OAA_currentSteamUser');
+                }
+
+                i = 0;
+                j = onAuthenticatedCallbacks.length;
 
                 for (i; i < j; i++) {
                     window[rootObjectName].handleRunCallback(onAuthenticatedCallbacks[i]);
