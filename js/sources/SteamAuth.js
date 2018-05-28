@@ -104,7 +104,7 @@
                         $rankedMMRNumber.innerHTML = userSteamProfileData.rankedMMR;
 
                         $unrankedMMR.appendChild($unrankedMMRNumber);
-                        $rankedMMRNumber.appendChild($rankedMMRNumber);
+                        $rankedMMR.appendChild($rankedMMRNumber);
 
                         $MMRContainer.appendChild($unrankedMMR);
                         $MMRContainer.appendChild($rankedMMR);
