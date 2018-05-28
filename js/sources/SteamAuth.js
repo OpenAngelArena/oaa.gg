@@ -132,6 +132,9 @@
                 $steamProfile.classList.remove('loading');
                 $steamProfile.classList.add('loaded');
 
+                console.log($steamProfile);
+                console.log($steamProfile.outerHTML);
+
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Running onAuthenticated callbacks', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
                 });
