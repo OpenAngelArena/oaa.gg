@@ -67,6 +67,17 @@
                         window[rootObjectName].awaitModulePrepared('Debug', function() {
                             window[rootObjectName].Debug.writeConsoleMessage('Leaderboard written', 'Leaderboard', window[rootObjectName].Debug.LOG_LEVEL_INFO);
                         });
+
+                        // Make sure SteamAuth gets a chance to do highlighting
+                        window[rootObjectName].awaitModulePrepared('SteamAuth', function() {
+                            var items = document.querySelectorAll('.OAAS32_' + window[rootObjectName].SteamAuth.currentUserSteam32);
+                            var i = 0;
+                            var j = items.length;
+
+                            for (i; i < j; i++) {
+                                items[i].classList.add('OAA_currentSteamUser');
+                            }
+                        });
                     }).catch(window[rootObjectName].Leaderboard.handleOnLeaderboardFetchFailure);
                 },
 
