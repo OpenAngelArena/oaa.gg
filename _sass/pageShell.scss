@@ -14,6 +14,7 @@
     @include transform(rotateX(180deg));
   }
 }
+
 @include generateKeyframes(-nav-mmr-rotate-ranked) {
   0%,
   10%,
@@ -205,7 +206,7 @@ body {
           right:    0;
           left:     0;
           bottom:   0;
-          padding:  3px 2px;
+          padding:  1px 2px;
 
           @include animation(-nav-mmr-rotate-ranked 3s linear infinite);
 
@@ -229,7 +230,7 @@ body {
           }
         }
         .OAAUnrankedMMR {
-          padding:  1px 2px;
+          padding: 1px 2px;
 
           @include animation(-nav-mmr-rotate-unranked 3s linear infinite);
 
