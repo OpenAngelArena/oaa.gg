@@ -62,6 +62,9 @@ body {
           }
         }
       }
+      .OAA_currentSteamUser {
+        background: rgba(55, 90, 127, .6);
+      }
 
       @media screen and (min-width: 400px) {
         border: 1px solid rgba(255, 255, 255, .8);
