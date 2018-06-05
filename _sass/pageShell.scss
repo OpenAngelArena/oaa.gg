@@ -1,3 +1,28 @@
+@include generateKeyframes(-nav-mmr-rotate-ranked) {
+  0%,
+  20%,
+  80%,
+  100% {
+    @include transform(rotateX(180deg));
+  }
+  40%,
+  60% {
+    @include transform(none);
+  }
+}
+@include generateKeyframes(-nav-mmr-rotate-unranked) {
+  0%,
+  20%,
+  80%,
+  100% {
+    @include transform(none);
+  }
+  40%,
+  60% {
+    @include transform(rotateX(180deg));
+  }
+}
+
 // Set main sizing, relative scaling for text, a nice font, general color basis and box model
 html {
   // Fix several browsers not sizing things correctly and IOS not scrolling AT ALL CORRECTLY
@@ -160,13 +185,6 @@ body {
 
         @include flex-direction(column);
 
-        &:hover {
-          .OAARankedMMR {
-            opacity:        1;
-            pointer-events: all;
-          }
-        }
-
         .SteamUserName {
           text-align:  center;
           font-weight: bold;
@@ -175,43 +193,40 @@ body {
         }
         .OAARankedMMR {
           position:       absolute;
-          top:            100%;
+          top:            0;
           right:          0;
-          opacity:        0;
+          left:           0;
+          bottom:         0;
           pointer-events: none;
           transition:     .3s ease-out;
           min-width:      100%;
-          margin-top:     7px;
           background:     #375A7F;
           padding:        3px 2px;
           line-height:    1em;
           border-radius:  3px;
 
+          @include animation(-nav-mmr-rotate-ranked 3s linear infinite);
+
           &::before {
             content: 'Ranked: ';
-          }
-          &::after {
-            content:    '';
-            background: inherit;
-            bottom:     100%;
-            left:       50%;
-            border:     4px solid #375A7F;
-            width:      12px;
-            height:     12px;
-            position:   absolute;
-            z-index:    -1;
-
-            @include transform(translate(-50%, 6px) rotate(45deg));
           }
         }
         .OAAMMRValues {
           text-align: center;
           margin-top: auto;
+          position:   relative;
 
           @extend %flexBox;
 
           @include justify-content(center);
           @include align-items(center);
+
+          @include animation(-nav-mmr-rotate-unranked 3s linear infinite);
+
+          & > * {
+            -webkit-backface-visibility: hidden;
+            backface-visibility:         hidden;
+          }
         }
         .OAAUnrankedMMR {
           padding: 1px 2px;
