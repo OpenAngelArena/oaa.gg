@@ -1,24 +1,12 @@
-@include generateKeyframes(-nav-mmr-rotate-ranked) {
+@include generateKeyframes(-nav-mmr-rotate) {
   0%,
-  20%,
-  80%,
-  100% {
-    @include transform(rotateX(180deg));
-  }
-  40%,
-  60% {
-    @include transform(none);
-  }
-}
-@include generateKeyframes(-nav-mmr-rotate-unranked) {
-  0%,
-  20%,
-  80%,
+  10%,
+  90%,
   100% {
     @include transform(none);
   }
-  40%,
-  60% {
+  30%,
+  70% {
     @include transform(rotateX(180deg));
   }
 }
@@ -205,7 +193,7 @@ body {
           line-height:    1em;
           border-radius:  3px;
 
-          @include animation(-nav-mmr-rotate-ranked 3s linear infinite);
+          @include transform(translate(-180deg));
 
           &::before {
             content: 'Ranked: ';
@@ -221,7 +209,7 @@ body {
           @include justify-content(center);
           @include align-items(center);
 
-          @include animation(-nav-mmr-rotate-unranked 3s linear infinite);
+          @include animation(-nav-mmr-rotate 3s linear infinite);
 
           & > * {
             -webkit-backface-visibility: hidden;
@@ -229,7 +217,9 @@ body {
           }
         }
         .OAAUnrankedMMR {
-          padding: 1px 2px;
+          padding:  1px 2px;
+          position: relative;
+          z-index:  2;
 
           &::before {
             content: 'Unranked: ';
