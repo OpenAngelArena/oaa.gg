@@ -1,31 +1,33 @@
-@include generateKeyframes(-nav-mmr-rotate) {
+@include generateKeyframes(-nav-mmr-rotate-unranked) {
   0%,
   10%,
   90%,
   100% {
-    .OAAUnrankedMMR {
-      opacity: 1;
+    opacity: 1;
 
-      @include transform(none);
-    }
-    .OAARankedMMR {
-      opacity: 0;
-
-      @include transform(rotateX(180deg));
-    }
+    @include transform(none);
   }
   30%,
   70% {
-    .OAAUnrankedMMR {
-      opacity: 0;
+    opacity: 0;
 
-      @include transform(rotateX(180deg));
-    }
-    .OAARankedMMR {
-      opacity: 1;
+    @include transform(rotateX(180deg));
+  }
+}
+@include generateKeyframes(-nav-mmr-rotate-ranked) {
+  0%,
+  10%,
+  90%,
+  100% {
+    opacity: 0;
 
-      @include transform(none);
-    }
+    @include transform(rotateX(180deg));
+  }
+  30%,
+  70% {
+    opacity: 1;
+
+    @include transform(none);
   }
 }
 
@@ -205,7 +207,7 @@ body {
           bottom:   0;
           padding:  3px 2px;
 
-          @include transform(translate(-180deg));
+          @include animation(-nav-mmr-rotate-ranked 3s linear infinite);
 
           &::before {
             content: 'Ranked: ';
@@ -221,8 +223,6 @@ body {
           @include justify-content(center);
           @include align-items(center);
 
-          @include animation(-nav-mmr-rotate 3s linear infinite);
-
           & > * {
             -webkit-backface-visibility: hidden;
             backface-visibility:         hidden;
@@ -230,8 +230,8 @@ body {
         }
         .OAAUnrankedMMR {
           padding:  1px 2px;
-          position: relative;
-          z-index:  2;
+
+          @include animation(-nav-mmr-rotate-unranked 3s linear infinite);
 
           &::before {
             content: 'Unranked: ';
