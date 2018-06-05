@@ -3,11 +3,29 @@
   10%,
   90%,
   100% {
-    @include transform(none);
+    .OAAUnrankedMMR {
+      opacity: 1;
+
+      @include transform(none);
+    }
+    .OAARankedMMR {
+      opacity: 0;
+
+      @include transform(rotateX(180deg));
+    }
   }
   30%,
   70% {
-    @include transform(rotateX(180deg));
+    .OAAUnrankedMMR {
+      opacity: 0;
+
+      @include transform(rotateX(180deg));
+    }
+    .OAARankedMMR {
+      opacity: 1;
+
+      @include transform(none);
+    }
   }
 }
 
@@ -180,18 +198,12 @@ body {
           padding:     2px;
         }
         .OAARankedMMR {
-          position:       absolute;
-          top:            0;
-          right:          0;
-          left:           0;
-          bottom:         0;
-          pointer-events: none;
-          transition:     .3s ease-out;
-          min-width:      100%;
-          background:     #375A7F;
-          padding:        3px 2px;
-          line-height:    1em;
-          border-radius:  3px;
+          position: absolute;
+          top:      0;
+          right:    0;
+          left:     0;
+          bottom:   0;
+          padding:  3px 2px;
 
           @include transform(translate(-180deg));
 
