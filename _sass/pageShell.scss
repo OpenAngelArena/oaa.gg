@@ -1,14 +1,14 @@
 @include generateKeyframes(-nav-mmr-rotate-unranked) {
   0%,
-  15%,
-  85%,
+  20%,
+  80%,
   100% {
     opacity: 1;
 
     @include transform(none);
   }
-  35%,
-  65% {
+  30%,
+  70% {
     opacity: 0;
 
     @include transform(rotateX(180deg));
@@ -17,15 +17,15 @@
 
 @include generateKeyframes(-nav-mmr-rotate-ranked) {
   0%,
-  15%,
-  85%,
+  20%,
+  80%,
   100% {
     opacity: 0;
 
     @include transform(rotateX(180deg));
   }
-  35%,
-  65% {
+  30%,
+  70% {
     opacity: 1;
 
     @include transform(none);
@@ -208,7 +208,7 @@ body {
           bottom:   0;
           padding:  1px 2px;
 
-          @include animation(-nav-mmr-rotate-ranked 3s linear infinite);
+          @include animation(-nav-mmr-rotate-ranked 6s linear infinite);
 
           &::before {
             content: 'Ranked: ';
@@ -232,7 +232,7 @@ body {
         .OAAUnrankedMMR {
           padding: 1px 2px;
 
-          @include animation(-nav-mmr-rotate-unranked 3s linear infinite);
+          @include animation(-nav-mmr-rotate-unranked 6s linear infinite);
 
           &::before {
             content: 'Unranked: ';
