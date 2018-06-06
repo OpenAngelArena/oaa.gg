@@ -65,9 +65,9 @@
                         document.querySelector('body>main').classList.add('leaderboardLoaded');
 
 
-                        var leaderboard = document.querySelector('#OAALeaderboard');
-                        leaderboard.classList.add('leaderboardLoaded');
-                        leaderboard.parentNode.classList.add('leaderboardLoaded');
+                        var leaderBoard = document.querySelector('#OAALeaderboard');
+                        leaderBoard.classList.add('leaderboardLoaded');
+                        leaderBoard.parentElement.classList.add('leaderboardLoaded');
 
                         window[rootObjectName].awaitModulePrepared('Debug', function() {
                             window[rootObjectName].Debug.writeConsoleMessage('Leaderboard written', 'Leaderboard', window[rootObjectName].Debug.LOG_LEVEL_INFO);
