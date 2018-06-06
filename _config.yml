@@ -38,3 +38,14 @@ defaults:
       type: "posts"
     values:
       layout: post
+
+# Prose configuration
+prose:
+  rooturl: "pages"
+  siteurl: "https://openangelarena.github.io/oaa.gg/"
+  ignore:
+    - webAppManifest.html
+    - leaderboard.html
+    - /_includes
+    - /_layouts
+  media: 'uploads'
