@@ -62,12 +62,13 @@
                             TBody.appendChild(constructTableRow(responseJSON[i]));
                         }
 
-                        document.querySelector('body>main').classList.add('leaderboardLoaded');
-
+                        try {
+                            document.querySelector('body>main').classList.add('leaderboardLoaded');
+                        } catch (e) { /* Silence */ }
 
                         var leaderBoard = document.querySelector('#OAALeaderboard');
                         leaderBoard.classList.add('leaderboardLoaded');
-                        leaderBoard.parentElement.classList.add('leaderboardLoaded');
+                        leaderBoard.parentNode.classList.add('leaderboardLoaded');
 
                         window[rootObjectName].awaitModulePrepared('Debug', function() {
                             window[rootObjectName].Debug.writeConsoleMessage('Leaderboard written', 'Leaderboard', window[rootObjectName].Debug.LOG_LEVEL_INFO);
