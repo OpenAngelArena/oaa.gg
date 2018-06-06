@@ -222,8 +222,6 @@
                             l[i].parentNode.replaceChild(replacement.cloneNode(true), l[i]);
                         }
 
-                        l.parentNode.replaceChild(replacement, l);
-
                         // And keep styling too
                         var style = document.createElement('style');
 
