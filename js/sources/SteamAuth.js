@@ -196,9 +196,13 @@
                     window[rootObjectName].Debug.writeConsoleMessage('User is not currently authenticated', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
                 });
 
-                var authButton = document.querySelector('.steamAuth');
+                var authButtons = document.querySelectorAll('.steamAuth');
+                var i = 0;
+                var j = authButtons.length;
 
-                authButton.classList.remove('loading');
+                for (i; i < j; i++) {
+                    authButtons[i].classList.remove('loading');
+                }
 
                 window[rootObjectName].awaitModulePrepared('Debug', function() {
                     window[rootObjectName].Debug.writeConsoleMessage('Bound interactions for nav button for authentication', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
