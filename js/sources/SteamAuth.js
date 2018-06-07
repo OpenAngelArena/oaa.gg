@@ -105,8 +105,8 @@
 
                     $nameContainer.classList.add('SteamUserName');
 
-                    $unrankedMMRNumber.innerHTML = Number(userSteamProfileData.unrankedMMR).toFixed(2).toString();
-                    $rankedMMRNumber.innerHTML = Number(userSteamProfileData.rankedMMR).toFixed(2).toString();
+                    $unrankedMMRNumber.innerHTML = Number(userSteamProfileData.unrankedMMR).toFixed(2).toString().replace(/(\.)?0+$/, '');
+                    $rankedMMRNumber.innerHTML = Number(userSteamProfileData.rankedMMR).toFixed(2).toString().replace(/(\.)?0+$/, '');
 
                     $unrankedMMRNumber.classList.add('OAAUnrankedMMRValue');
                     $rankedMMRNumber.classList.add('OAARankedMMRValue');
