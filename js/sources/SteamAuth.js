@@ -89,7 +89,7 @@
                     i = 0;
 
                     for (i; i < j; i++) {
-                        $steamProfiles[i].appendChild($OAADownloadLink);
+                        $steamProfiles[i].appendChild($OAADownloadLink.cloneNode(true));
                     }
                 } else if (userSteamProfileData && userSteamProfileData.steamid && userSteamProfileData.profile) {
                     window[rootObjectName].awaitModulePrepared('Debug', function() {
@@ -129,8 +129,8 @@
                     i = 0;
 
                     for (i; i < j; i++) {
-                        $steamProfiles[i].appendChild($nameContainer);
-                        $steamProfiles[i].appendChild($MMRContainer);
+                        $steamProfiles[i].appendChild($nameContainer.cloneNode(true));
+                        $steamProfiles[i].appendChild($MMRContainer.cloneNode(true));
                     }
 
                     // Make their avatar available in layout?
