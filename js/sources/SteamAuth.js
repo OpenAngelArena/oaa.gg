@@ -196,7 +196,7 @@
                     window[rootObjectName].Debug.writeConsoleMessage('User is not currently authenticated', 'SteamAuth', window[rootObjectName].Debug.LOG_LEVEL_INFO);
                 });
 
-                var authButton = document.querySelector('body>nav .steamAuth');
+                var authButton = document.querySelector('.steamAuth');
 
                 authButton.classList.remove('loading');
 
