@@ -43,9 +43,9 @@
 
                             row.classList.add('OAAS32_' + rowData.steamid); // Used to highlight the current user if we happen to have a Steam ID to look up
 
-                            ranking.innerHTML = rowData.ranking.toString();
-                            name.innerHTML = rowData.name.toString();
-                            mmr.innerHTML = rowData.mmr.toFixed(2).toLocaleString(); // Format to decimal with 2 digits precision and localise
+                            ranking.innerText = rowData.ranking.toString();
+                            name.innerText = rowData.name.toString();
+                            mmr.innerText = rowData.mmr.toFixed(2).toLocaleString(); // Format to decimal with 2 digits precision and localise
 
                             row.appendChild(ranking);
                             row.appendChild(name);

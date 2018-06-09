@@ -101,12 +101,12 @@
                     var $unrankedMMRNumber = document.createElement('span');
                     var $rankedMMRNumber = document.createElement('span');
 
-                    $nameContainer.innerHTML = userSteamProfileData.profile.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    $nameContainer.innerText = userSteamProfileData.profile.name;
 
                     $nameContainer.classList.add('SteamUserName');
 
-                    $unrankedMMRNumber.innerHTML = Number(userSteamProfileData.unrankedMMR).toFixed(2).toString().replace(/(\.)?0+$/, '');
-                    $rankedMMRNumber.innerHTML = Number(userSteamProfileData.rankedMMR).toFixed(2).toString().replace(/(\.)?0+$/, '');
+                    $unrankedMMRNumber.innerText = Number(userSteamProfileData.unrankedMMR).toFixed(2).toString().replace(/(\.)?0+$/, '');
+                    $rankedMMRNumber.innerText = Number(userSteamProfileData.rankedMMR).toFixed(2).toString().replace(/(\.)?0+$/, '');
 
                     $unrankedMMRNumber.classList.add('OAAUnrankedMMRValue');
                     $rankedMMRNumber.classList.add('OAARankedMMRValue');
