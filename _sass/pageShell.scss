@@ -134,25 +134,25 @@ body {
         }
       }
       &.loading {
-        #steamAuth,
+        .steamAuth,
         .steamProfile {
           opacity:        0;
           pointer-events: none;
         }
       }
       &.loaded {
-        #steamAuth {
+        .steamAuth {
           opacity:        0;
           pointer-events: none;
         }
       }
       &.authenticated {
         .steamLoader,
-        #steamAuth {
+        .steamAuth {
           opacity:        0;
           pointer-events: none;
         }
-        #steamProfile {
+        .steamProfile {
           pointer-events: all;
         }
       }
@@ -182,7 +182,7 @@ body {
         @include justify-content(center);
         @include align-items(center);
       }
-      #steamProfile {
+      .steamProfile {
         position:       absolute;
         top:            0;
         left:           0;
@@ -239,7 +239,7 @@ body {
           }
         }
       }
-      #steamAuth {
+      .steamAuthLink {
         background: transparent;
         color:      #FFFFFF;
         border:     0;
