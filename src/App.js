@@ -1,25 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import { Analytics } from './google-analytics';
+import AppLayout from './components/layout';
+import Auth from './components/auth';
+import Login from './components/login';
+import Logout from './components/logout';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <CssBaseline />
+      <Router>
+        <Analytics />
+
+        <Switch>
+          <Route exact path="/auth/:token">
+            <Auth />
+          </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/logout">
+            <Logout />
+          </Route>
+          <Route path="/">
+            <AppLayout />
+          </Route>
+        </Switch>
+      </Router>
+    </>
   );
 }
 
