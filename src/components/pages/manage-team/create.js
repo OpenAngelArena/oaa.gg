@@ -34,8 +34,8 @@ const useStyles = makeStyles(theme => ({
 
 function useTeamWizard() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [creationStep, setCreationStep] = useState(1);
-  const [teamName, setTeamName] = useState('kill all bees');
+  const [creationStep, setCreationStep] = useState(0);
+  const [teamName, setTeamName] = useState('');
   const [userState, userActions] = useUserState();
 
   useEffect(() => {

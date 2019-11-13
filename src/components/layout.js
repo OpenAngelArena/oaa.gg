@@ -1,5 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import storage from 'any-storage';
 import { makeStyles } from '@material-ui/core/styles';
 
 import AppBar from "./app-bar";
@@ -30,8 +32,10 @@ const useStyles = makeStyles(theme => ({
 export default function AppLayout(props) {
   const [userState] = useUserState();
   const classes = useStyles();
+  const { pathname } = useLocation();
 
   if (!userState.user) {
+    storage.set('route', pathname);
     return <Login />
   }
 

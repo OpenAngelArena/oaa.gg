@@ -1,6 +1,6 @@
 import React from 'react';
 import globalHook from 'use-global-hook';
-import { useParams, Redirect } from "react-router-dom";
+import { useParams, useHistory, Redirect } from "react-router-dom";
 import storage from 'any-storage';
 import Jwt from 'jsonwebtoken';
 import Request from 'config-request';
@@ -60,13 +60,22 @@ export const useUserState = globalHook(React, initialState, actions);
 function Auth() {
   const { token } = useParams();
   const userActions = useUserState()[1];
+  const history = useHistory();
 
   if (!token || !token.length) {
     return <Redirect to="/" />
   }
 
   storage.set('authentication', token, () => userActions.login());
-  return <Redirect to="/login" />
+  storage.get('route', function(err, data) {
+    if (err || !data) {
+      history.push('/login');
+      return;
+    }
+    history.push(data);
+    storage.remove('route');
+  });
+  return null;
 }
 
 export default Auth;

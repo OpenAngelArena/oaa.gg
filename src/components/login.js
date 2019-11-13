@@ -39,13 +39,13 @@ function Login() {
       <br />
       <Paper align="center" className={ classes.root }>
         <Typography paragraph>
-          Log in using steam. This will give oaa.gg permission to read your name, steam id, avatar, and other public information.
+          Log in using steam! This will give oaa.gg permission to read your name, steam id, avatar, and other public information.
         </Typography>
         <Typography paragraph>
         Always check the address bar at the top when logging in with Steam, never put your password into a website not owned by Valve.
         </Typography>
         <br />
-        <Button variant="contained" onClick={ ()=> document.location.href="http://localhost:9969/auth/authenticate" }>
+        <Button variant="contained" onClick={ ()=> document.location.href=authUrl }>
           Log In
         </Button>
       </Paper>
