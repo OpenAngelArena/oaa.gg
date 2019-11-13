@@ -21,8 +21,7 @@ function Login() {
   const classes = useStyles();
 
   if (userState.user) {
-    console.log('Redirecting back!');
-    return <Redirect to="/" />
+    return <Redirect to="/" />;
   }
 
   userActions.login();
