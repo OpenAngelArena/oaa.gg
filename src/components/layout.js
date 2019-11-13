@@ -45,6 +45,9 @@ export default function AppLayout(props) {
           <Route exact path="/">
             <Overview />
           </Route>
+          <Route path="/team/:action/*">
+            <ManageTeam />
+          </Route>
           <Route path="/team/:action">
             <ManageTeam />
           </Route>

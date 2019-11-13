@@ -55,7 +55,7 @@ function useTeamWizard() {
     setCreationStep(2);
   }
 
-  async function createTeam() {
+  async function createTeamAction() {
     setButtonDisabled(true);
     const { token } = await createTeam(teamName);
     storage.set('authentication', token, () => userActions.login());
@@ -69,7 +69,7 @@ function useTeamWizard() {
   }, {
     setTeamName,
     submitTeamName,
-    createTeam
+    createTeam: createTeamAction
   }];
 }
 

@@ -2,6 +2,9 @@ import React from 'react';
 import { useParams } from "react-router-dom";
 import NoTeam from './no-team';
 import CreateTeam from './create';
+import Overview from './overview';
+import JoinTeam from './join';
+import ViewTeam from './view';
 import StandardPage from '../standard-page';
 import { useUserState } from '../../auth';
 
@@ -13,6 +16,12 @@ function ManageTeam() {
   switch (action) {
     case 'create':
       return <CreateTeam />
+      break;
+    case 'join':
+      return <JoinTeam />
+      break;
+    case 'view':
+      return <ViewTeam />
       break;
     default:
       break;
@@ -28,7 +37,7 @@ function ManageTeam() {
 
   return (
     <StandardPage>
-      This is the manage team ui!
+      <Overview />
     </StandardPage>
   );
 }
