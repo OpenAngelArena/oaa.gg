@@ -98,6 +98,10 @@ export default function AppDrawer(props) {
     text: 'Your Teams',
     path: '/team'
   }, {
+    icon: GroupIcon,
+    text: 'All Teams',
+    path: '/team/list'
+  }, {
     icon: SettingsIcon,
     text: 'Manage Team',
     path: '/team/manage'

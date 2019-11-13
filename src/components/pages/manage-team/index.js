@@ -6,6 +6,7 @@ import Overview from './overview';
 import JoinTeam from './join';
 import ViewTeam from './view';
 import MyTeams from './my-teams';
+import ListTeams from './all-teams';
 import StandardPage from '../standard-page';
 import { useUserState } from '../../auth';
 
@@ -23,6 +24,9 @@ function ManageTeam() {
       break;
     case 'view':
       return <ViewTeam />
+      break;
+    case 'list':
+      return <ListTeams />
       break;
     case 'manage':
       return (

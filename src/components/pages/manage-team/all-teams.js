@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 import { listTeams } from '../../../api/team';
-import { useUserState } from '../../auth';
 import StandardPage from '../standard-page';
 import Loading from './loading';
 import TeamList from './team-list';
 
-export default function MyTeams() {
+export default function AllTeams() {
   const [teamList, setTeamList] = useState();
-  const [userState, userActions] = useUserState();
 
   useEffect(() => {
     async function getTeamList() {
-      const data = await listTeams(userState.user.steamid);
+      const data = await listTeams();
       setTeamList(data);
     }
     if (!teamList) {
