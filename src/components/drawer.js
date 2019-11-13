@@ -17,6 +17,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import GroupIcon from '@material-ui/icons/Group';
+import SettingsIcon from '@material-ui/icons/Settings';
 // import InboxIcon from '@material-ui/icons/Inbox';
 // import MailIcon from '@material-ui/icons/Mail';
 
@@ -94,8 +95,12 @@ export default function AppDrawer(props) {
 
   const menuItems = [{
     icon: GroupIcon,
-    text: 'Manage Team',
+    text: 'Your Teams',
     path: '/team'
+  }, {
+    icon: SettingsIcon,
+    text: 'Manage Team',
+    path: '/team/manage'
   },
   'divider',
   {

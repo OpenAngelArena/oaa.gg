@@ -22,7 +22,7 @@ export async function getInvite() {
       if (err) {
         reject(err);
       }
-      resolve(data.token);
+      resolve(data ? data.token : null);
     });
   });
 }
@@ -70,4 +70,20 @@ export async function getTeamData(id) {
       resolve(data);
     });
   });
+}
+
+export async function listTeams(steamid) {
+  return new Promise((resolve, reject) => {
+    Request.get('/team/list', {
+      query: {
+        steamid
+      }
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      }
+      resolve(data.data);
+    });
+  });
+
 }
