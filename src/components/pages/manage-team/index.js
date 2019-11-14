@@ -39,13 +39,13 @@ function ManageTeam() {
       break;
   }
 
-  if (!isOnTeam) {
-    return (
-      <StandardPage>
-        <NoTeam />
-      </StandardPage>
-    );
-  }
+  // if (!isOnTeam) {
+  //   return (
+  //     <StandardPage>
+  //       <NoTeam />
+  //     </StandardPage>
+  //   );
+  // }
 
   return (
     <MyTeams />

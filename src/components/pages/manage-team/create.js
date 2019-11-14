@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { If } from 'react-extras';
 import { timeout } from 'thyming';
 import Request from 'config-request';
@@ -37,6 +37,7 @@ function useTeamWizard() {
   const [creationStep, setCreationStep] = useState(0);
   const [teamName, setTeamName] = useState('');
   const [userState, userActions] = useUserState();
+  const history = useHistory();
 
   useEffect(() => {
     console.log('Check', creationStep);
@@ -58,7 +59,10 @@ function useTeamWizard() {
   async function createTeamAction() {
     setButtonDisabled(true);
     const { token } = await createTeam(teamName);
-    storage.set('authentication', token, () => userActions.login());
+    storage.set('authentication', token, () => {
+      userActions.login();
+      history.push('/team/manage');
+    });
   }
 
   return [{

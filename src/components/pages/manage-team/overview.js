@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { getInvite } from '../../../api/team';
 import { useUserState } from '../../auth';
 import StandardPage from '../standard-page';
+import NoTeam from './no-team';
 
 const useStyles = makeStyles(theme => ({
   statBox: {
@@ -36,6 +37,9 @@ function Overview() {
 
   const inviteLink = `${document.location.origin}/team/join/${inviteToken}`;
 
+  if (!team) {
+    return <NoTeam />;
+  }
   return (
     <>
       <Typography variant="h3">
