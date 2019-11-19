@@ -18,6 +18,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import GroupIcon from '@material-ui/icons/Group';
 import SettingsIcon from '@material-ui/icons/Settings';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 // import InboxIcon from '@material-ui/icons/Inbox';
 // import MailIcon from '@material-ui/icons/Mail';
 
@@ -112,6 +113,17 @@ export default function AppDrawer(props) {
     text: 'Logout',
     path: '/logout'
   }];
+
+  if (userState.user.isAdmin) {
+    const logout = menuItems.pop();
+    menuItems.push({
+      icon: SupervisorAccountIcon,
+      text: 'Admin',
+      path: '/admin'
+    });
+    menuItems.push('divider')
+    menuItems.push(logout);
+  }
 
   return (
     <Drawer

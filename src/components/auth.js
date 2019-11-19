@@ -36,7 +36,13 @@ function decodeToken(store, data) {
 
 const actions = {
   login: (store) => {
-    storage.get('authentication', function(err, data) {
+    storage.get('authentication', function(err, _data) {
+      let data = _data;
+      let isImpersionation = false;
+      if (sessionStorage && sessionStorage.impersonate) {
+        data = sessionStorage.impersonate;
+        isImpersionation = true;
+      }
       if (!data) {
         Request.configure({ token: null });
         if (store.state.user !== null) {
@@ -47,9 +53,21 @@ const actions = {
         return;
       }
       const token = decodeToken(store, data);
+      if (isImpersionation) {
+        store.setState({
+          isImpersionation
+        });
+      }
       const lastLogin = Date.now() - (new Date(token.iat * 1000));
       if ((!store.state.hasUpdated && lastLogin > 1000 * 60 * 0.5) || (lastLogin > 1000 * 60 * 5)) {
-        refreshAuthToken(partial(decodeToken, store));
+        refreshAuthToken((token) => {
+          if (isImpersionation) {
+            sessionStorage.impersonate = token;
+            decodeToken(store, token);
+          } else {
+            storage.set('authentication', token, (err, token) => decodeToken(store, token));
+          }
+        });
       }
     });
   }
@@ -57,12 +75,19 @@ const actions = {
 
 export const useUserState = globalHook(React, initialState, actions);
 
-function Auth() {
+function Auth(props) {
+  const { impersonate } = props;
   const { token } = useParams();
   const userActions = useUserState()[1];
   const history = useHistory();
 
   if (!token || !token.length) {
+    return <Redirect to="/" />
+  }
+
+  if (impersonate) {
+    sessionStorage.impersonate = token;
+    userActions.login();
     return <Redirect to="/" />
   }
 

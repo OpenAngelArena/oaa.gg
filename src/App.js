@@ -23,6 +23,9 @@ function App() {
           <Route exact path="/auth/:token">
             <Auth />
           </Route>
+          <Route exact path="/impersonate/:token">
+            <Auth impersonate />
+          </Route>
           <Route exact path="/login">
             <Login />
           </Route>

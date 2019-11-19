@@ -1,5 +1,4 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import storage from 'any-storage';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from "./app-bar";
 import Drawer from "./drawer";
 import Login from "./login";
+import Routes from "./routes";
 import FourOhFour from './404';
 import Overview from "./pages/overview";
 import ManageTeam from './pages/manage-team';
@@ -45,23 +45,7 @@ export default function AppLayout(props) {
       <Drawer />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Switch>
-          <Route exact path="/">
-            <Overview />
-          </Route>
-          <Route path="/team/:action/*">
-            <ManageTeam />
-          </Route>
-          <Route path="/team/:action">
-            <ManageTeam />
-          </Route>
-          <Route path="/team">
-            <ManageTeam />
-          </Route>
-          <Route>
-            <FourOhFour />
-          </Route>
-        </Switch>
+        <Routes />
       </main>
     </div>
   );

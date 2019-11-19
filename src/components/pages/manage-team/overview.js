@@ -11,6 +11,7 @@ import { getInvite } from '../../../api/team';
 import { useUserState } from '../../auth';
 import StandardPage from '../standard-page';
 import NoTeam from './no-team';
+import PlayerList from './player-list';
 
 const useStyles = makeStyles(theme => ({
   statBox: {
@@ -35,7 +36,7 @@ function Overview() {
 
   const { team, profile } = userState.user;
 
-  const inviteLink = `${document.location.origin}/team/join/${inviteToken}`;
+  const inviteLink = inviteToken ? `${document.location.origin}/team/join/${inviteToken}` : null;
 
   if (!team) {
     return <NoTeam />;
@@ -51,6 +52,7 @@ function Overview() {
         Invite player using this link:&nbsp;
         { inviteLink ? (<a href={ inviteLink }>{ inviteLink }</a>) : 'Loading...' }
       </Typography>
+      <PlayerList players={team.players} />
     </>
   );
 }
