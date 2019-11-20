@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-
   },
   appBarShift: {
     marginLeft: drawerWidth => drawerWidth,
@@ -39,6 +38,7 @@ export default function Bar(props) {
 
   return (
     <AppBar
+      color="default"
       position="fixed"
       className={classNames(classes.appBar, {
         [classes.appBarShift]: open,

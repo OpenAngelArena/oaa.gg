@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const initialState = {
-  open: true,
+  open: false,
   drawerWidth: 240
 };
 

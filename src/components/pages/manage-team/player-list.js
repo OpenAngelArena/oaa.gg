@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
@@ -15,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 
   },
   actionIcon: {
-    margin: theme.spacing(0, 1)
+    margin: theme.spacing(0, 0, 0, 1)
   }
 }));
 
@@ -23,32 +24,35 @@ export default function PlayerList(props) {
   const classes = useStyles();
   const { players, actions } = props;
 
-  function actionHandler(action) {
+  function actionHandler(player, action) {
     return function handler(e) {
-      console.log(action);
+      if (typeof action.action === 'function') {
+        return action.action(player);
+      }
     }
   }
 
   function renderButtons(player) {
-    if (!actions) {
-      return [];
-    }
     let playerActions = actions;
     if (typeof actions === 'function') {
       playerActions = actions(player);
     }
+    if (!playerActions) {
+      return [];
+    }
     return (
       <ListItemSecondaryAction>
         { playerActions.map((action) => (
-          <IconButton
-            key={ action.name }
-            edge="end"
-            aria-label={ action.name }
-            className={ classes.actionIcon }
-            onClick={ actionHandler(action) }
-            >
-            <action.icon />
-          </IconButton>
+          <Tooltip key={ action.name } title={ action.name }>
+            <IconButton
+              edge="end"
+              aria-label={ action.name.toLowerCase() }
+              className={ classes.actionIcon }
+              onClick={ actionHandler(player, action) }
+              >
+              <action.icon />
+            </IconButton>
+          </Tooltip>
         ))}
       </ListItemSecondaryAction>
     );

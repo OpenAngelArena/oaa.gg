@@ -85,5 +85,50 @@ export async function listTeams(steamid) {
       resolve(data.data);
     });
   });
+}
 
+export function acceptInvite(steamid) {
+  return new Promise((resolve, reject) => {
+    Request.post('/team/acceptInvite', {
+      body: {
+        steamid
+      }
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
+export function rejectInvite(steamid) {
+  return new Promise((resolve, reject) => {
+    Request.post('/team/rejectInvite', {
+      body: {
+        steamid
+      }
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
+
+export function removePlayer(steamid) {
+  return new Promise((resolve, reject) => {
+    Request.post('/team/removePlayer', {
+      body: {
+        steamid
+      }
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
 }

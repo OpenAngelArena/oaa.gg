@@ -4,8 +4,10 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import { useTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+import theme from './theme';
 import { Analytics } from './google-analytics';
 import AppLayout from './components/layout';
 import Auth from './components/auth';
@@ -14,7 +16,7 @@ import Logout from './components/logout';
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
         <Analytics />
@@ -37,7 +39,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </>
+    </ThemeProvider>
   );
 }
 

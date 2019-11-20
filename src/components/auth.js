@@ -10,7 +10,8 @@ import { refreshAuthToken } from '../api/auth';
 
 const initialState = {
   user: null,
-  hasUpdated: false
+  hasUpdated: false,
+  isImpersionation: false
 };
 
 function decodeToken(store, data) {
@@ -35,6 +36,13 @@ function decodeToken(store, data) {
 }
 
 const actions = {
+  updateTeam: (store, team) => {
+    store.setState({
+      user: {...store.state.user,
+        team
+      }
+    });
+  },
   login: (store) => {
     storage.get('authentication', function(err, _data) {
       let data = _data;
@@ -59,7 +67,10 @@ const actions = {
         });
       }
       const lastLogin = Date.now() - (new Date(token.iat * 1000));
-      if ((!store.state.hasUpdated && lastLogin > 1000 * 60 * 0.5) || (lastLogin > 1000 * 60 * 5)) {
+      if (!store.state.hasUpdated) {
+        store.setState({
+          hasUpdated: true
+        });
         refreshAuthToken((token) => {
           if (isImpersionation) {
             sessionStorage.impersonate = token;
@@ -74,6 +85,20 @@ const actions = {
 };
 
 export const useUserState = globalHook(React, initialState, actions);
+
+export function useTokenRefresher() {
+  const [userState, userActions] = useUserState();
+
+  function updateAuthToken(token) {
+    if (userState.isImpersionation) {
+      sessionStorage.impersonate = token;
+    } else {
+      storage.set('authentication', token, () => userActions.login());
+    }
+  }
+
+  return () => refreshAuthToken(updateAuthToken);
+}
 
 function Auth(props) {
   const { impersonate } = props;
