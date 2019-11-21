@@ -27,6 +27,18 @@ export async function getInvite() {
   });
 }
 
+export async function createInvite() {
+  return new Promise((resolve, reject) => {
+    Request.post('/team/createInvite', {
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      }
+      resolve(data ? data.token : null);
+    });
+  });
+}
+
 export async function checkInvite(token) {
   return new Promise((resolve, reject) => {
     Request.get('/team/checkInvite', {

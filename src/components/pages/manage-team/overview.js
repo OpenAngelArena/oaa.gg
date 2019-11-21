@@ -6,21 +6,35 @@ import copy from 'clipboard-copy';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
-import { getInvite } from '../../../api/team';
+import RefreshIcon from '@material-ui/icons/Refresh';
+
+import { getInvite, createInvite } from '../../../api/team';
 import { useUserState } from '../../auth';
-import StandardPage from '../standard-page';
 import NoTeam from './no-team';
-import PlayerList from './player-list';
 import PendingPlayers from './pending-players';
 import TeamRoster from './roster';
 
 const useStyles = makeStyles(theme => ({
   root: {
+  },
+  inviteHolder: {
+    display: 'flex'
+  },
+  inviteBox: {
+    flex: 1
+  },
+  inviteRefresh: {
+    flex: 0,
+    width: 80,
+    transition: 'transform 1s',
+    '&:hover': {
+      transform: 'rotate(90deg)'
+    }
   }
 }));
 
@@ -56,6 +70,13 @@ function Overview() {
     }
   }
 
+  async function generateInvite(e) {
+    const token = await createInvite();
+    if (token) {
+      setInviteToken(token);
+    }
+  }
+
   return (
     <>
       <Typography variant="h3">
@@ -63,10 +84,7 @@ function Overview() {
       </Typography>
       <Divider />
       <br />
-      <Typography>
-        Invite player using this link
-      </Typography>
-      <Container maxWidth="md">
+      <Container>
         <Grid container>
           <Grid
             item
@@ -76,20 +94,32 @@ function Overview() {
             <Typography variant="h5">
               Invite players
             </Typography>
-            <Tooltip
-              open={open}
-              title="Copied"
-              placement="bottom-end"
-              >
-              <TextField
-                fullWidth
-                value={inviteLink}
-                label="Invite Link"
-                placeholder="Loading link..."
-                onClick={copyInviteUrl}
-                onBlur={() => setOpen(false)}
-                />
-            </Tooltip>
+            <div className={classes.inviteHolder}>
+              <div className={classes.inviteBox}>
+                <Tooltip
+                  open={open}
+                  title="Copied"
+                  placement="bottom-end"
+                  >
+                  <TextField
+                    fullWidth
+                    value={inviteLink}
+                    label="Invite Link"
+                    placeholder="Loading link..."
+                    onClick={copyInviteUrl}
+                    onBlur={() => setOpen(false)}
+                    className={ classes.invite }
+                    />
+                </Tooltip>
+              </div>
+              <div className={classes.inviteRefresh}>
+                <Tooltip title="Generate new invite link">
+                <IconButton onClick={generateInvite}>
+                  <RefreshIcon />
+                </IconButton>
+                </Tooltip>
+              </div>
+            </div>
             <br />
             <br />
             <br />

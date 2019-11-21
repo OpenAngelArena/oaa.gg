@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -11,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import PlayerList from './player-list';
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,12 +39,12 @@ export default function TeamList(props) {
             aria-controls={`${team.id}-content`}
             id={`${team.id}-header`}
           >
-            <a href="#" onClick={viewTeam(team)}>
+            <Button onClick={viewTeam(team)}>
               {team.name}
-            </a>
+            </Button>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <PlayerList players={team.players} />
+            <PlayerList players={ team.players.filter((p) => p.confirmed) } />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       ))}

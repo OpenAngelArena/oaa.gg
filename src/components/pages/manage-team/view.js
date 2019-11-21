@@ -3,12 +3,9 @@ import { useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 
 import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import { getTeamData } from '../../../api/team';
-import { useUserState } from '../../auth';
 import StandardPage from '../standard-page';
 import Loading from './loading';
 import PlayerList from './player-list';
@@ -21,7 +18,6 @@ const useStyles = makeStyles(theme => ({
 
 function Overview() {
   const [teamData, setTeamData] = useState();
-  const [userState] = useUserState();
   const classes = useStyles();
   const params = useParams();
   const token = params[0];
@@ -34,9 +30,7 @@ function Overview() {
     if (!teamData) {
       updateToken();
     }
-  }, [teamData]);
-
-  const { profile } = userState.user;
+  }, [teamData, token]);
 
   if (!teamData) {
     return <Loading />;
@@ -50,7 +44,7 @@ function Overview() {
       <Divider />
       <br />
       <br />
-      <PlayerList players={teamData.players} />
+      <PlayerList players={teamData.players.filter((p) => p.confirmed)} />
     </StandardPage>
   );
 }

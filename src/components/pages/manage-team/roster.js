@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import DeleteIcon from '@material-ui/icons/Delete';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { removePlayer } from '../../../api/team';
 import { useUserState, useTokenRefresher } from '../../auth';
@@ -19,11 +19,11 @@ export default function TeamRoster(props) {
   }
 
   function getActions(player) {
-    if (player.steamid === userState.user.steamid) {
-      return null;
-    }
+    // if (player.steamid === userState.user.steamid) {
+    //   return null;
+    // }
     return [{
-      icon: DeleteIcon,
+      icon: ExitToAppIcon,
       name: 'Remove Player',
       action: removePlayerAction
     }];
