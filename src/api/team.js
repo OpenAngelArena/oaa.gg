@@ -99,7 +99,7 @@ export async function listTeams(steamid) {
   });
 }
 
-export function acceptInvite(steamid) {
+export async function acceptInvite(steamid) {
   return new Promise((resolve, reject) => {
     Request.post('/team/acceptInvite', {
       body: {
@@ -114,7 +114,7 @@ export function acceptInvite(steamid) {
   });
 }
 
-export function rejectInvite(steamid) {
+export async function rejectInvite(steamid) {
   return new Promise((resolve, reject) => {
     Request.post('/team/rejectInvite', {
       body: {
@@ -130,7 +130,7 @@ export function rejectInvite(steamid) {
 }
 
 
-export function removePlayer(steamid) {
+export async function removePlayer(steamid) {
   return new Promise((resolve, reject) => {
     Request.post('/team/removePlayer', {
       body: {
@@ -143,4 +143,35 @@ export function removePlayer(steamid) {
       resolve(data);
     });
   });
+}
+
+export async function leaveTeam(teamId) {
+  return new Promise((resolve, reject) => {
+    Request.post('/team/leaveTeam', {
+      body: {
+        teamId
+      }
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
+export async function setTeamName(name) {
+  return new Promise((resolve, reject) => {
+    Request.post('/team/updateTeam', {
+      body: {
+        name
+      }
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+
 }

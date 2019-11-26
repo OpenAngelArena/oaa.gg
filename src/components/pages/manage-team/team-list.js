@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
+import { partial } from 'ap';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -21,13 +22,21 @@ const useStyles = makeStyles(theme => ({
 export default function TeamList(props) {
   const classes = useStyles();
   const history = useHistory();
-  const { teams } = props;
+  const { teams, actions = [] } = props;
 
   function viewTeam(team) {
     return (e) => {
       history.push(`/team/view/${team.id}`);
       e.preventDefault();
     };
+  }
+
+  function renderAction(team, action) {
+    return (
+      <Button key={action.name} onClick={partial(action.action, team, action)}>
+      { action.name }
+      </Button>
+    );
   }
 
   return (
@@ -44,6 +53,7 @@ export default function TeamList(props) {
             </Button>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
+            {actions.map(partial(renderAction, team))}
             <PlayerList players={ team.players.filter((p) => p.confirmed) } />
           </ExpansionPanelDetails>
         </ExpansionPanel>
