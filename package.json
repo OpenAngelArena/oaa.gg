@@ -2,6 +2,7 @@
   "name": "oaa.gg",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://openangelarena.github.io/oaa.gg/",
   "dependencies": {
     "@material-ui/core": "^4.6.0",
     "@material-ui/icons": "^4.5.1",
