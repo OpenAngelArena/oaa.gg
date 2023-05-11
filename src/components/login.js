@@ -26,7 +26,7 @@ function Login() {
 
   userActions.login();
 
-  let authUrl = `https://chrisinajar.com:4969/auth/authenticate`;
+  let authUrl = `https://chrisinajar.com:2053/auth/authenticate`;
   if (document.location.origin.indexOf('localhost') !== -1) {
     authUrl = `http://localhost:9969/auth/authenticate`;
   }
