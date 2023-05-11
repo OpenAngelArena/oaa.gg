@@ -6,7 +6,12 @@ name: Build and deploy
 on:
   push:
     branches: [ "master" ]
-
+    
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  
 jobs:
   build:
 
