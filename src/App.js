@@ -18,7 +18,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router basename="/oaa.gg">
+      <Router>
         <Analytics />
 
         <Switch>
