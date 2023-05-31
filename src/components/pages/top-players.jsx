@@ -31,13 +31,13 @@ export default function TopPlayers() {
       <List>
         <ListItem>
           <Grid container>
-            <Grid item xs={1}>
+            <Grid item xs={2} md={1}>
               <Typography variant="h6">Rank</Typography>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={8} md={4}>
               <Typography variant="h5">Player Name</Typography>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={2} md={7}>
               <Typography variant="h6">MMR</Typography>
             </Grid>
           </Grid>
@@ -45,10 +45,10 @@ export default function TopPlayers() {
         {topPlayerData.map((player, i) => (
           <ListItem key={player.steamid}>
             <Grid container>
-              <Grid item xs={1}>
+              <Grid item xs={2} md={1}>
                 <Typography variant="h6">{i + 1}</Typography>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={8} md={4}>
                 {user.steamid === player.steamid && (
                   <Typography variant="h5">
                     <strong>
@@ -60,7 +60,7 @@ export default function TopPlayers() {
                   <Typography variant="h5">{player.name}</Typography>
                 )}
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={2} md={7}>
                 <Typography variant="h6">{player.mmr.toFixed(2)}</Typography>
               </Grid>
             </Grid>
