@@ -25,6 +25,7 @@ function decodeToken(store, data) {
       json: true
     }
   });
+
   console.log('Logged in successfuly', token);
 
   store.setState({
