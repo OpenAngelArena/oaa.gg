@@ -102,6 +102,11 @@ export default function AppDrawer(props) {
       path: "/top",
     },
     {
+      icon: EmojiEventsIcon,
+      text: "Match History",
+      path: "/matches",
+    },
+    {
       icon: GroupIcon,
       text: "Your Teams",
       path: "/team",

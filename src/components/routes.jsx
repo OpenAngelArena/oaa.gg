@@ -6,6 +6,7 @@ import Admin from "./pages/admin";
 import Overview from "./pages/overview";
 import ManageTeam from "./pages/manage-team";
 import TopPlayers from "./pages/top-players";
+import MatchHistory from "./pages/match-history";
 
 export default function Routes() {
   return (
@@ -18,6 +19,9 @@ export default function Routes() {
       </Route>
       <Route path="/top">
         <TopPlayers />
+      </Route>
+      <Route path="/matches">
+        <MatchHistory />
       </Route>
       <Route path="/team/:action">
         <ManageTeam />

@@ -20,6 +20,7 @@
     "react-ga": "^2.7.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "short-time-ago": "^2.0.0",
     "thyming": "^0.1.1",
     "use-global-hook": "^0.1.12"
   },

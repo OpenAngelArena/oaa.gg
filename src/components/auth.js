@@ -18,6 +18,7 @@ function decodeToken(store, data) {
   const token = Jwt.decode(data);
   Request.configure({
     baseUrl: token.baseUrl,
+    // baseUrl: 'http://localhost:6969/',
     token: data,
     authorization: 'x-auth-token',
     options: {
