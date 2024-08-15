@@ -12,9 +12,6 @@ import Match from './match';
 import StandardPage from "../standard-page";
 
 import { useUserState } from "../../auth";
-
-import { getTopPlayers } from "../../../api/top";
-import { getMatch } from "../../../api/match";
 import { getUser } from "../../../api/user";
 
 export default function MatchHistory() {

@@ -10,45 +10,16 @@ import Divider from '@material-ui/core/Divider';
 
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import CasinoIcon from "@material-ui/icons/Casino";
+import ShuffleIcon from "@material-ui/icons/Shuffle";
+import HelpIcon from "@material-ui/icons/Help";
 
 import { timeAgo } from "short-time-ago";
 
 import { useUserState } from "../../auth";
+import HeroIcon, {heroName} from '../../hero-icon';
 import { getMatch } from "../../../api/match";
 import { CloudDownload } from "@material-ui/icons";
-
-const HeroNameMap = {
-  electrician: 'chatterjee'
-};
-
-const CustomHeroImage = {
-  electrician: "https://raw.githubusercontent.com/OpenAngelArena/oaa/master/content/panorama/images/heroes/npc_dota_hero_electrician.png",
-  sohei: "https://raw.githubusercontent.com/OpenAngelArena/oaa/master/content/panorama/images/heroes/npc_dota_hero_sohei.png",
-};
-
-function imgUrlForHero(hero) {
-  if (CustomHeroImage[hero]) {
-    return CustomHeroImage[hero];
-  }
-  return `https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/${hero}.png`
-}
-
-function heroName(hero) {
-  if (HeroNameMap[hero]) {
-    hero = HeroNameMap[hero];
-  }
-
-  return hero
-    .replace(/_/g, ' ')
-    .split(' ')
-    .map((part) => {
-      if (!part || !part.length) {
-        return part;
-      }
-      return part[0].toUpperCase() + part.substr(1).toLowerCase();
-    })
-    .join(' ');
-}
 
 export default function Match({ matchId }) {
   const [matchData, setMatchData] = useState(null);
@@ -108,10 +79,11 @@ export default function Match({ matchId }) {
   return (
     <Grid container>
       <Grid item xs={2} sm={2} md={1}>
-        {startDate}
+        {(new Date(startDate)).toLocaleDateString()}
       </Grid>
       <Grid item xs={3} sm={2} md={1}>
-        <EmojiEventsIcon style={{color: didWin ? "#00ff00" : "#ff0000"}} />
+        {matchData.outcome && <EmojiEventsIcon style={{color: didWin ? "#00ff00" : "#ff0000"}} />}
+        {!matchData.outcome && <HelpIcon />}
         {" "}
         <img height={32} src={`/${teamName}.png`} alt={heroName(teamName)}/>
       </Grid>
@@ -122,8 +94,10 @@ export default function Match({ matchId }) {
       <Grid item xs={5} sm={6} md={2}>
         {myHeroPick && (
           <>
-            <img height={24} src={imgUrlForHero(myHeroName)} alt={heroName(myHeroName)}/>
-            {randomText} {heroName(myHeroName)}
+            <HeroIcon height={24} hero={myHeroName} />
+            {myHeroPick.random && <CasinoIcon />}
+            {myHeroPick.rerandom && <ShuffleIcon />}
+            {/* heroName(myHeroName) */}
           </>
         )}
       </Grid>
@@ -134,7 +108,7 @@ export default function Match({ matchId }) {
             {matchData.teams.radiant.map((steamid) => {
               const pick = matchData.heroPicks[steamid];
               if (pick) {
-                return <img key={steamid} height={24} src={imgUrlForHero(pick.hero.substr(14))} alt={heroName(pick.hero.substr(14))}/>
+                return <HeroIcon height={24} hero={pick.hero} />
               }
               return null;
             })}
@@ -146,7 +120,7 @@ export default function Match({ matchId }) {
             {matchData.teams.dire.map((steamid) => {
               const pick = matchData.heroPicks[steamid];
               if (pick) {
-                return <img key={steamid} style={{height: '24px'}} src={imgUrlForHero(pick.hero.substr(14))} alt={heroName(pick.hero.substr(14))}/>
+                return <HeroIcon height={24} hero={pick.hero} />
               }
               return null;
             })}

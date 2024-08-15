@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+import { getUser } from "../../api/user";
 import { useUserState } from '../auth';
+import HeroIcon, { heroName } from '../hero-icon';
 import StandardPage from './standard-page';
 
 const useStyles = makeStyles(theme => ({
@@ -17,6 +19,18 @@ const useStyles = makeStyles(theme => ({
 function Overview() {
   const [userState] = useUserState();
   const classes = useStyles();
+  const [userProfile, setUserProfile] = useState(null);
+  const { user } = userState;
+
+  useEffect(() => {
+    async function fetchData() {
+      const userData = getUser(user.steamid);
+
+      setUserProfile(await userData);
+    }
+    fetchData();
+  }, []);
+
 
   const {
     mmr,
@@ -74,7 +88,52 @@ function Overview() {
             </Paper>
           </Grid>
         ))}
+
+        <Grid item xs={12} md={6}>
+          <Paper className={ classes.statBox }>
+            <Typography variant="h5">
+              Most picked heroes
+            </Typography>
+            {userProfile && Object.keys(userProfile.heroPicks)
+              .sort((heroA, heroB) => userProfile.heroPicks[heroA] - userProfile.heroPicks[heroB])
+              .slice(0, 20)
+              .map((hero) => (
+                <Grid container spacing={2} key={hero}>
+                  <Grid item xs={4}>
+                    <HeroIcon height={48} hero={hero} />
+                  </Grid>
+                  <Grid item xs={8} style={{ textAlign: 'left' }}>
+                    {heroName(hero)}
+                  </Grid>
+                </Grid>
+              ))
+            }
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Paper className={ classes.statBox }>
+            <Typography variant="h5">
+              Most banned heroes
+            </Typography>
+            {userProfile && Object.keys(userProfile.heroBans)
+              .sort((heroA, heroB) => userProfile.heroBans[heroA] - userProfile.heroBans[heroB])
+              .slice(0, 20)
+              .map((hero) => (
+                <Grid container spacing={2} key={hero}>
+                  <Grid item xs={4}>
+                    <HeroIcon height={48} hero={hero} />
+                  </Grid>
+                  <Grid item xs={8} style={{ textAlign: 'left' }}>
+                    {heroName(hero)}
+                  </Grid>
+                </Grid>
+              ))
+            }
+          </Paper>
+        </Grid>
       </Grid>
+      <br />
+      <br />
     </StandardPage>
   );
 }
