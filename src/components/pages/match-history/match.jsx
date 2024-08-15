@@ -15,6 +15,18 @@ import { useUserState } from "../../auth";
 import { getMatch } from "../../../api/match";
 import { CloudDownload } from "@material-ui/icons";
 
+const CustomHeroImage = {
+  electrician: "https://raw.githubusercontent.com/OpenAngelArena/oaa/master/content/panorama/images/heroes/npc_dota_hero_electrician.png",
+  sohei: "https://raw.githubusercontent.com/OpenAngelArena/oaa/master/content/panorama/images/heroes/npc_dota_hero_sohei.png",
+};
+
+function imgUrlForHero(hero) {
+  if (CustomHeroImage[hero]) {
+    return CustomHeroImage[hero];
+  }
+  return `https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/${hero}.png`
+}
+
 export default function Match({ matchId }) {
   const [matchData, setMatchData] = useState(null);
   const [{ user }] = useUserState();
@@ -88,7 +100,7 @@ export default function Match({ matchId }) {
       <Grid item xs={2} sm={2} md={1}>
         {myHeroPick && (
           <>
-            <img height={24} src={`https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/${myHeroPick.hero.substr(14)}.png`} alt={myHeroPick.hero.substr(14)}/>
+            <img height={24} src={imgUrlForHero(myHeroPick.hero.substr(14))} alt={myHeroPick.hero.substr(14)}/>
             {randomText}
           </>
         )}
@@ -99,7 +111,7 @@ export default function Match({ matchId }) {
             {matchData.teams.radiant.map((steamid) => {
               const pick = matchData.heroPicks[steamid];
               if (pick) {
-                return <img key={steamid} height={24} src={`https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/${pick.hero.substr(14)}.png`} alt={pick.hero.substr(14)}/>
+                return <img key={steamid} height={24} src={imgUrlForHero(pick.hero.substr(14))} alt={pick.hero.substr(14)}/>
               }
               return null;
             })}
@@ -107,7 +119,7 @@ export default function Match({ matchId }) {
             {matchData.teams.dire.map((steamid) => {
               const pick = matchData.heroPicks[steamid];
               if (pick) {
-                return <img key={steamid} height={24} src={`https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/${pick.hero.substr(14)}.png`} alt={pick.hero.substr(14)}/>
+                return <img key={steamid} height={24} src={imgUrlForHero(pick.hero.substr(14))} alt={pick.hero.substr(14)}/>
               }
               return null;
             })}
