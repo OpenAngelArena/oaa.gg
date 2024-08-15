@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
+import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 
 import { useUserState } from "../auth";
@@ -57,7 +58,7 @@ export default function TopPlayers() {
                   </Typography>
                 )}
                 {user.steamid !== player.steamid && (
-                  <Typography variant="h5">{player.name}</Typography>
+                  <Typography variant="h5"><Link href={`/matches/${player.steamid}`}>{player.name}</Link></Typography>
                 )}
               </Grid>
               <Grid item xs={2} md={7}>

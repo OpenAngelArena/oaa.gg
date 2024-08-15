@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
@@ -24,6 +25,7 @@ import { getMatch } from "../../../api/match";
 import { CloudDownload } from "@material-ui/icons";
 
 export default function Match({ matchId }) {
+  const { userId } = useParams();
   const { ref, inView, entry } = useInView({
     triggerOnce: true,
     delay: 500,
@@ -63,16 +65,18 @@ export default function Match({ matchId }) {
     );
   }
 
-  console.log(matchData);
+  // console.log(matchData);
 
   const startDate = matchData.startTime.substr(0, 8);
   const startTime = matchData.startTime.substr(8);
 
-  const wasOnDire = matchData.teams.dire.indexOf(user.steamid) >= 0;
+  const steamid = userId || user.steamid;
+
+  const wasOnDire = matchData.teams.dire.indexOf(steamid) >= 0;
   const teamName = wasOnDire ? "dire" : "radiant";
   const didWin = matchData.outcome === teamName;
 
-  const myHeroPick = matchData.heroPicks[user.steamid];
+  const myHeroPick = matchData.heroPicks[steamid];
   const myHeroName = myHeroPick ? myHeroPick.hero.substr(14) : null;
   // https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/abaddon.png
 

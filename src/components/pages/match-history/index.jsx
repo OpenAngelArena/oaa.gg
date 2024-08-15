@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
@@ -15,20 +16,21 @@ import { useUserState } from "../../auth";
 import { getUser } from "../../../api/user";
 
 export default function MatchHistory() {
+  const { userId } = useParams();
+
   const [userProfile, setUserProfile] = useState(null);
   const [{ user }] = useUserState();
 
+  console.log({ userId });
+
   useEffect(() => {
     async function fetchData() {
-      const userData = getUser(user.steamid);
+      const userData = getUser(userId || user.steamid);
 
       setUserProfile(await userData);
     }
     fetchData();
   }, []);
-
-
-  console.log(user, userProfile);
 
   if (!userProfile) {
     return <StandardPage />;
@@ -39,8 +41,11 @@ export default function MatchHistory() {
 
   return (
     <StandardPage>
-      <Typography variant="h2" gutterBottom>
-        {`Match History`}
+      <Typography variant="h2">
+        Match History
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        {userProfile.profile.name}
       </Typography>
       <List>
       {recentMatches.reverse().map((matchId) => (<ListItem key={matchId}>

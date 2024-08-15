@@ -20,6 +20,9 @@ export default function Routes() {
       <Route path="/top">
         <TopPlayers />
       </Route>
+      <Route path="/matches/:userId">
+        <MatchHistory />
+      </Route>
       <Route path="/matches">
         <MatchHistory />
       </Route>
