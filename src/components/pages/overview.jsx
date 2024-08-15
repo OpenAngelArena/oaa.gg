@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { getUser } from "../../api/user";
 import { useUserState } from '../auth';
 import HeroIcon, { heroName } from '../hero-icon';
+import ActiveMatches from '../active-matches';
 import StandardPage from './standard-page';
 
 const useStyles = makeStyles(theme => ({
@@ -134,6 +135,7 @@ function Overview() {
       </Grid>
       <br />
       <br />
+      <ActiveMatches />
     </StandardPage>
   );
 }
