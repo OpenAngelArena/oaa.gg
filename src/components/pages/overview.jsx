@@ -96,7 +96,7 @@ function Overview() {
               Most picked heroes
             </Typography>
             {userProfile && Object.keys(userProfile.heroPicks)
-              .sort((heroA, heroB) => userProfile.heroPicks[heroA] - userProfile.heroPicks[heroB])
+              .sort((heroA, heroB) => userProfile.heroPicks[heroB] - userProfile.heroPicks[heroA])
               .slice(0, 20)
               .map((hero) => (
                 <Grid container spacing={2} key={hero}>
@@ -117,7 +117,7 @@ function Overview() {
               Most banned heroes
             </Typography>
             {userProfile && Object.keys(userProfile.heroBans)
-              .sort((heroA, heroB) => userProfile.heroBans[heroA] - userProfile.heroBans[heroB])
+              .sort((heroA, heroB) => userProfile.heroBans[heroB] - userProfile.heroBans[heroA])
               .slice(0, 20)
               .map((hero) => (
                 <Grid container spacing={2} key={hero}>
