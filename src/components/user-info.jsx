@@ -31,10 +31,10 @@ function UserInfo(props = {}) {
 
       setUserProfile(await userData);
     }
-    if (userProfile.steamid !== userId) {
+    if (userProfile && userProfile.steamid !== userId) {
       fetchData();
     }
-  }, []);
+  }, [userId]);
 
   if (!userProfile) {
     return null;
