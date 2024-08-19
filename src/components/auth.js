@@ -8,6 +8,14 @@ import { partial } from 'ap';
 
 import { refreshAuthToken } from '../api/auth';
 
+Request.configure({
+  baseUrl: "https://chrisinajar.com:2053",
+  // baseUrl: 'http://localhost:6969/',
+  options: {
+    json: true
+  }
+});
+
 const initialState = {
   user: null,
   hasUpdated: false,

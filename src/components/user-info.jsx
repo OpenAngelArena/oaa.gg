@@ -23,7 +23,7 @@ function UserInfo(props = {}) {
   const [userProfile, setUserProfile] = useState(props.userProfile || null);
   const { user } = userState;
 
-  const greeting = (user.steamid === userId) ? 'Hello, ' : '';
+  const greeting = (user && user.steamid === userId) ? 'Hello, ' : '';
 
   useEffect(() => {
     async function fetchData() {

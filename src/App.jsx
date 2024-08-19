@@ -13,6 +13,8 @@ import AppLayout from './components/layout';
 import Auth from './components/auth';
 import Login from './components/login';
 import Logout from './components/logout';
+import MatchHistory from './components/pages/match-history';
+import UserProfile from './components/pages/user-profile';
 
 function App() {
   return (
@@ -33,6 +35,12 @@ function App() {
           </Route>
           <Route exact path="/logout">
             <Logout />
+          </Route>
+          <Route path="/public/matches/:userId">
+            <MatchHistory />
+          </Route>
+          <Route path="/public/user/:userId">
+            <UserProfile />
           </Route>
           <Route path="/">
             <AppLayout />
