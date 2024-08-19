@@ -19,13 +19,11 @@ import { timeAgo } from "short-time-ago";
 
 import { useInView } from 'react-intersection-observer';
 
-import { useUserState } from "../../auth";
-import HeroIcon, {heroName} from '../../hero-icon';
-import { getMatch } from "../../../api/match";
-import { CloudDownload } from "@material-ui/icons";
+import { useUserState } from "./auth";
+import HeroIcon, {heroName} from './hero-icon';
+import { getMatch } from "../api/match";
 
-export default function Match({ matchId }) {
-  const { userId } = useParams();
+export default function Match({ matchId, userId }) {
   const { ref, inView, entry } = useInView({
     triggerOnce: true,
     delay: 500,

@@ -58,7 +58,7 @@ export default function TopPlayers() {
                   </Typography>
                 )}
                 {user.steamid !== player.steamid && (
-                  <Typography variant="h5"><Link href={`/matches/${player.steamid}`}>{player.name}</Link></Typography>
+                  <Typography variant="h5"><Link href={`/user/${player.steamid}`}>{player.name}</Link></Typography>
                 )}
               </Grid>
               <Grid item xs={2} md={7}>

@@ -7,6 +7,7 @@ import Overview from "./pages/overview";
 import ManageTeam from "./pages/manage-team";
 import TopPlayers from "./pages/top-players";
 import MatchHistory from "./pages/match-history";
+import UserProfile from './pages/user-profile';
 
 export default function Routes() {
   return (
@@ -22,6 +23,9 @@ export default function Routes() {
       </Route>
       <Route path="/matches/:userId">
         <MatchHistory />
+      </Route>
+      <Route path="/user/:userId">
+        <UserProfile />
       </Route>
       <Route path="/matches">
         <MatchHistory />
