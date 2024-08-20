@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 
 function UserInfo(props = {}) {
   const [userState] = useUserState();
-  const { userId = userState.steamid } = props;
+  const { userId = userState.user?.steamid } = props;
   const classes = useStyles();
   const [userProfile, setUserProfile] = useState(props.userProfile || null);
   const { user } = userState;
