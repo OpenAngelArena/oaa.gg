@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import ProgressBar from '@material-ui/core/LinearProgress';
 
 import { getUser } from "../api/user";
 import { useUserState } from './auth';
@@ -81,6 +82,16 @@ function UserInfo(props = {}) {
     value: seasonPlacings
   }];
 
+  const heroBans = Object.keys(userProfile ? userProfile.heroBans : {})
+    .sort((heroA, heroB) => userProfile.heroBans[heroB] - userProfile.heroBans[heroA])
+    .slice(0, 10);
+  const totalHeroBans = heroBans.reduce((memo, val) => memo + userProfile.heroBans[val], 0);
+
+  const heroPicks = Object.keys(userProfile ? userProfile.heroPicks : {})
+    .sort((heroA, heroB) => userProfile.heroPicks[heroB] - userProfile.heroPicks[heroA])
+    .slice(0, 10);
+  const totalHeroPicks = heroPicks.reduce((memo, val) => memo + userProfile.heroPicks[val], 0);
+
   return (
     <>
       <Typography variant="h2" gutterBottom>
@@ -105,16 +116,17 @@ function UserInfo(props = {}) {
             <Typography variant="h5">
               Most picked heroes
             </Typography>
-            {userProfile && Object.keys(userProfile.heroPicks)
-              .sort((heroA, heroB) => userProfile.heroPicks[heroB] - userProfile.heroPicks[heroA])
-              .slice(0, 10)
-              .map((hero) => (
+            {heroPicks.map((hero) => (
                 <Grid container spacing={2} key={hero}>
+                  <Grid item xs={12}>
+                    <ProgressBar color='primary' variant='determinate' value={userProfile.heroPicks[hero] / totalHeroPicks * 100} />
+                  </Grid>
                   <Grid item xs={4}>
                     <HeroIcon height={48} hero={hero} />
                   </Grid>
                   <Grid item xs={8} style={{ textAlign: 'left' }}>
-                    {heroName(hero)}
+                    <Typography variant='h4'>{heroName(hero)}</Typography>
+                    {userProfile.heroPicks[hero] > 1 && <Typography variant='h5'>x{userProfile.heroPicks[hero]}</Typography>}
                   </Grid>
                 </Grid>
               ))
@@ -126,16 +138,17 @@ function UserInfo(props = {}) {
             <Typography variant="h5">
               Most banned heroes
             </Typography>
-            {userProfile && Object.keys(userProfile.heroBans)
-              .sort((heroA, heroB) => userProfile.heroBans[heroB] - userProfile.heroBans[heroA])
-              .slice(0, 10)
-              .map((hero) => (
+            {heroBans.map((hero) => (
                 <Grid container spacing={2} key={hero}>
+                  <Grid item xs={12}>
+                    <ProgressBar color='secondary' variant='determinate' value={userProfile.heroBans[hero] / totalHeroBans * 100} />
+                  </Grid>
                   <Grid item xs={4}>
                     <HeroIcon height={48} hero={hero} />
                   </Grid>
                   <Grid item xs={8} style={{ textAlign: 'left' }}>
-                    {heroName(hero)}
+                    <Typography variant='h4'>{heroName(hero)}</Typography>
+                    {userProfile.heroBans[hero] > 1 && <Typography variant='h5'>x{userProfile.heroBans[hero]}</Typography>}
                   </Grid>
                 </Grid>
               ))
