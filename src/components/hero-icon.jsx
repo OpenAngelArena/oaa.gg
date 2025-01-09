@@ -7,6 +7,7 @@ export const HeroNameMap = {
 export const CustomHeroImage = {
   electrician: "https://raw.githubusercontent.com/OpenAngelArena/oaa/master/content/panorama/images/heroes/npc_dota_hero_electrician.png",
   sohei: "https://raw.githubusercontent.com/OpenAngelArena/oaa/master/content/panorama/images/heroes/npc_dota_hero_sohei.png",
+  eul: "https://raw.githubusercontent.com/OpenAngelArena/oaa/master/content/panorama/images/heroes/npc_dota_hero_eul.png",
 };
 
 export function imgUrlForHero(hero) {

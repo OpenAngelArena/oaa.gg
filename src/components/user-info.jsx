@@ -9,7 +9,6 @@ import ProgressBar from '@material-ui/core/LinearProgress';
 import { getUser } from "../api/user";
 import { useUserState } from './auth';
 import HeroIcon, { heroName } from './hero-icon';
-import ActiveMatches from './active-matches';
 
 const useStyles = makeStyles(theme => ({
   statBox: {
