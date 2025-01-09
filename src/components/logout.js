@@ -7,6 +7,7 @@ function Logout() {
   const [userState, userActions] = useUserState();
   const history = useHistory();
 
+  sessionStorage.impersonate = false;
   storage.remove('authentication', () => {
     userActions.login();
     history.push('/login');
