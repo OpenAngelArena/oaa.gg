@@ -9,7 +9,7 @@ export async function impersonate(steamid) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });

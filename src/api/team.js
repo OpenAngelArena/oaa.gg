@@ -8,7 +8,7 @@ export async function createTeam(teamName) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });
@@ -20,7 +20,7 @@ export async function getInvite() {
     Request.get('/team/invite', {
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data ? data.token : null);
     });
@@ -32,7 +32,7 @@ export async function createInvite() {
     Request.post('/team/createInvite', {
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data ? data.token : null);
     });
@@ -47,7 +47,7 @@ export async function checkInvite(token) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });
@@ -62,7 +62,7 @@ export async function joinTeam(token) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });
@@ -77,7 +77,7 @@ export async function getTeamData(id) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });
@@ -92,7 +92,7 @@ export async function listTeams(steamid) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data.data);
     });
@@ -107,7 +107,7 @@ export async function acceptInvite(steamid) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });
@@ -122,7 +122,7 @@ export async function rejectInvite(steamid) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });
@@ -138,7 +138,7 @@ export async function removePlayer(steamid) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });
@@ -153,7 +153,7 @@ export async function leaveTeam(teamId) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });
@@ -168,7 +168,7 @@ export async function setTeamName(name) {
       }
     }, function (err, data) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
       resolve(data);
     });

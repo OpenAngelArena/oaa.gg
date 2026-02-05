@@ -19,7 +19,7 @@ Request.configure({
 const initialState = {
   user: null,
   hasUpdated: false,
-  isImpersionation: false
+  isImpersonation: false
 };
 
 function decodeToken(store, data) {
@@ -56,10 +56,10 @@ const actions = {
   login: (store) => {
     storage.get('authentication', function(err, _data) {
       let data = _data;
-      let isImpersionation = false;
+      let isImpersonation = false;
       if (sessionStorage && sessionStorage.impersonate) {
         data = sessionStorage.impersonate;
-        isImpersionation = true;
+        isImpersonation = true;
       }
       if (!data) {
         Request.configure({ token: null });
@@ -71,9 +71,9 @@ const actions = {
         return;
       }
       const token = decodeToken(store, data);
-      if (isImpersionation) {
+      if (isImpersonation) {
         store.setState({
-          isImpersionation
+          isImpersonation
         });
       }
       const lastLogin = Date.now() - (new Date(token.iat * 1000));
@@ -82,7 +82,7 @@ const actions = {
           hasUpdated: true
         });
         refreshAuthToken((token) => {
-          if (isImpersionation) {
+          if (isImpersonation) {
             sessionStorage.impersonate = token;
             decodeToken(store, token);
           } else {
@@ -100,7 +100,7 @@ export function useTokenRefresher() {
   const [userState, userActions] = useUserState();
 
   function updateAuthToken(token) {
-    if (userState.isImpersionation) {
+    if (userState.isImpersonation) {
       sessionStorage.impersonate = token;
     } else {
       storage.set('authentication', token, () => userActions.login());
